@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados — Encuesta de comida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --acento: #e85d26;
+      --texto: #1a1a18;
+      --texto-suave: #6b6b65;
+      --borde: #e0ddd8;
+      --fondo: #faf9f7;
+      --blanco: #ffffff;
+      --radio: 12px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    header {
+      max-width: 860px;
+      margin: 0 auto 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--acento);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-link {
+      font-size: 0.875rem;
+      color: var(--texto-suave);
+      text-decoration: none;
+      border-bottom: 1px solid var(--borde);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-link:hover { color: var(--acento); border-color: var(--acento); }
+
+    .pagina {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .encabezado {
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .subtitulo {
+      color: var(--texto-suave);
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    #estado {
+      color: var(--texto-suave);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .graficos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 600px) {
+      .graficos { grid-template-columns: 1fr; }
+    }
+
+    .tarjeta {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      padding: 1.5rem;
+    }
+
+    .tarjeta h2 {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--texto-suave);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tarjeta-tabla {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .tarjeta-tabla h2 {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--texto-suave);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    thead tr {
+      border-bottom: 1px solid var(--borde);
+    }
+
+    thead th {
+      text-align: left;
+      padding: 0.5rem 0.75rem 0.75rem;
+      font-weight: 500;
+      color: var(--texto-suave);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--fondo);
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: var(--fondo); }
+    tbody tr:last-child { border-bottom: none; }
+
+    tbody td {
+      padding: 0.65rem 0.75rem;
+      vertical-align: top;
+    }
+
+    .comentario {
+      color: var(--texto-suave);
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .badge {
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 1.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .badge-1, .badge-2 { background: #fcebeb; color: #a32d2d; }
+    .badge-3 { background: #faeeda; color: #633806; }
+    .badge-4, .badge-5 { background: #eaf3de; color: #27500a; }
+
+    .btn-actualizar {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.55rem 1.2rem;
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      background: var(--blanco);
+      color: var(--texto-suave);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-actualizar:hover { border-color: var(--acento); color: var(--acento); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="logo">Encuesta</span>
+    <a href="index.html" class="nav-link">← Completar encuesta</a>
+  </header>
+
+  <div class="pagina">
+    <div class="encabezado">
+      <h1>Resultados</h1>
+      <p class="subtitulo" id="total">Cargando...</p>
+      <p id="estado"></p>
+    </div>
+
+    <div class="graficos">
+      <div class="tarjeta">
+        <h2>Promedio por categoría</h2>
+        <canvas id="grafico-barras"></canvas>
+      </div>
+      <div class="tarjeta">
+        <h2>Perfil general</h2>
+        <canvas id="grafico-radar"></canvas>
+      </div>
+    </div>
+
+    <div class="tarjeta-tabla">
+      <h2>Últimas respuestas</h2>
+      <table id="tabla-respuestas">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Plato</th>
+            <th>Sabor</th>
+            <th>Present.</th>
+            <th>Temp.</th>
+            <th>Porción</th>
+            <th>Comentario</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button class="btn-actualizar" onclick="cargarDatos()">Actualizar</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/resultados.js"></script>
+</body>
+</html>
