@@ -307,29 +307,30 @@ tbody td {
 }
 .btn-actualizar:hover { border-color: var(--acento); color: var(--acento); }
 
-.hero{
-  width:100%;
-  height:420px;
-  position:relative;
-  overflow:hidden;
+.hero {
+  width: 100%;
+  height: 420px;
+  position: relative;
+  /* Reemplazamos la etiqueta img cargándola directamente desde el CSS */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('misstartaleta.jpeg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.hero-img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(0.6);
-}
+/* Podés borrar por completo la regla .hero-img de tus archivos ya que no se usará */
 
-.hero-overlay{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:2rem;
+.hero-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 2rem;
+  max-width: 800px; /* Evita que el texto toque los extremos */
+  width: 100%;
 }
 
 .hero-title{
@@ -358,4 +359,18 @@ tbody td {
   color:white;
   font-size:14px;
   border:1px solid rgba(255,255,255,0.25);
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 40px;
+}
+
+.nav-link {
+    color: #ff6b35;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
 }
