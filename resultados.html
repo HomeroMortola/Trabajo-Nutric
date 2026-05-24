@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados — Evaluación Tartaletas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <span class="logo">Tartaletas</span>
+    <a href="frontnutri.html" class="nav-link">← Completar evaluación</a>
+  </header>
+
+  <div class="pagina">
+    <div class="encabezado">
+      <h1>Resultados</h1>
+      <p class="subtitulo" id="total">Cargando...</p>
+      <p id="estado"></p>
+    </div>
+
+    <div class="graficos">
+      <div class="tarjeta">
+        <h2>Promedio por sección</h2>
+        <canvas id="grafico-barras"></canvas>
+      </div>
+      <div class="tarjeta">
+        <h2>Perfil sensorial</h2>
+        <canvas id="grafico-radar"></canvas>
+      </div>
+    </div>
+
+    <div id="detalle-secciones"></div>
+
+    <div class="tarjeta-tabla">
+      <h2>Últimas respuestas</h2>
+      <table id="tabla-respuestas">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Vista</th>
+            <th>Olfato</th>
+            <th>Tacto</th>
+            <th>Gusto</th>
+            <th>Sabor</th>
+            <th>Comentario</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button class="btn-actualizar" onclick="cargarDatos()">↻ Actualizar</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/resultados.js"></script>
+</body>
+</html>
