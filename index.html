@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación Sensorial — Tartaletas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+
+<div class="hero">
+  <img class="hero-img" src="misstartaleta.jpeg" alt="Tartaleta saludable">
+
+  <div class="hero-overlay">
+
+    <div class="hero-badge">
+      <i class="ti ti-leaf"></i>
+      Evaluación Sensorial
+    </div>
+
+    <h1 class="hero-title">
+      Tartaleta Integral Nutritiva
+    </h1>
+
+    <p class="hero-sub">
+      Análisis sensorial completo basado en apariencia,
+      aroma, textura y sabor del producto alimenticio.
+    </p>
+
+  </div>
+</div>
+
+
+<header>
+    <a href="resultados.html" class="nav-link">Ver resultados →</a>
+  </header>
+
+  
+<div class="content">
+
+  <!-- Progreso -->
+  <div class="progress-label" id="progress-label">0 de 24 respondidas</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+
+  <!-- SECCIÓN 1: VISTA -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-eye"></i></div>
+    <div class="section-title-text">Evaluacion Visual <span style="font-weight:400;color:#6b7280;font-size:13px;">— Antes de probar</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">1</span><span>¿Cómo calificarías la apariencia general de la tartaleta?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="1" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-1">1</div></div>
+      <div class="val-desc" id="vd-1">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">2</span><span>¿Cómo percibís la intensidad del color de la tartaleta?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="2" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-2">1</div></div>
+      <div class="val-desc" id="vd-2">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">3</span><span>¿Qué tan uniforme es la forma de la tartaleta?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="3" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-3">1</div></div>
+      <div class="val-desc" id="vd-3">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">4</span><span>¿Qué tan atractivo te resulta visualmente el emplatado de la tartaleta?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="4" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-4">1</div></div>
+      <div class="val-desc" id="vd-4">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">5</span><span>Visualmente, ¿cómo se observa el aspecto de la masa integral?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="5" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-5">1</div></div>
+      <div class="val-desc" id="vd-5">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">6</span><span>Al mirar el relleno, ¿se logran distinguir a simple vista los diferentes ingredientes?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="6" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-6">1</div></div>
+      <div class="val-desc" id="vd-6">ni me gusta ni me disgusta</div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: OLFATO -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-wind"></i></div>
+    <div class="section-title-text">OLFATO <span style="font-weight:400;color:#6b7280;font-size:13px;">— Antes de probar</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">7</span><span>¿Qué tan intenso es el olor que desprende la tartaleta?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="7" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-7">1</div></div>
+      <div class="val-desc" id="vd-7">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">8</span><span>¿Cómo calificarías la primera impresión olfativa del producto?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="8" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-8">1</div></div>
+      <div class="val-desc" id="vd-8">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">9</span><span>¿Se percibe el olor a las verduras del relleno (cebolla, morrón, espinaca)?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="9" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-9">1</div></div>
+      <div class="val-desc" id="vd-9">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">10</span><span>¿Se nota la presencia de olor a legumbres?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="10" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-10">1</div></div>
+      <div class="val-desc" id="vd-10">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">11</span><span>¿Se percibe el aroma característico de la masa casera integral?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="11" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-11">1</div></div>
+      <div class="val-desc" id="vd-11">ni me gusta ni me disgusta</div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: TACTO Y OÍDO -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-hand-finger"></i></div>
+    <div class="section-title-text">TACTO Y OÍDO <span style="font-weight:400;color:#6b7280;font-size:13px;">— Al corte y primer contacto</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">12</span><span>¿Cómo sentís la temperatura de la muestra al recibirla?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="12" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-12">1</div></div>
+      <div class="val-desc" id="vd-12">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">13</span><span>Al cortar o tocar la masa, ¿qué nivel de crocancia percibís?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="13" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-13">1</div></div>
+      <div class="val-desc" id="vd-13">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">14</span><span>¿Cómo describirías la consistencia o firmeza de la masa al tacto?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="14" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-14">1</div></div>
+      <div class="val-desc" id="vd-14">ni me gusta ni me disgusta</div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: GUSTO Y BOCA -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-heart"></i></div>
+    <div class="section-title-text">GUSTO Y BOCA <span style="font-weight:400;color:#6b7280;font-size:13px;">— Durante el consumo</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">15</span><span>¿Qué nivel de intensidad de sabor salado percibís en el producto?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="15" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-15">1</div></div>
+      <div class="val-desc" id="vd-15">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">16</span><span>¿Se percibe sabor amargo?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="16" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-16">1</div></div>
+      <div class="val-desc" id="vd-16">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">17</span><span>¿Se llega a percibir sabor picante?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="17" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-17">1</div></div>
+      <div class="val-desc" id="vd-17">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">18</span><span>¿Cómo considerarías que los sabores de los distintos ingredientes están bien integrados entre sí?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="18" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-18">1</div></div>
+      <div class="val-desc" id="vd-18">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">19</span><span>Al masticar el relleno, ¿cómo describirías su textura interna?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="19" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-19">1</div></div>
+      <div class="val-desc" id="vd-19">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">20</span><span>¿Sentís la textura del poroto procesado dentro del relleno?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="20" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-20">1</div></div>
+      <div class="val-desc" id="vd-20">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">21</span><span>¿Cuál es la sensación de humedad que deja el bocado al masticarlo?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="21" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-21">1</div></div>
+      <div class="val-desc" id="vd-21">ni me gusta ni me disgusta</div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 5: SABOR POST-INGESTA -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-star"></i></div>
+    <div class="section-title-text">SABOR <span style="font-weight:400;color:#6b7280;font-size:13px;">— Después de ingerir</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">22</span><span>¿Cómo calificarías el sabor general de toda la tartaleta en boca?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="22" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-22">1</div></div>
+      <div class="val-desc" id="vd-22">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">23</span><span>¿Se logran identificar de forma clara los sabores individuales del pollo y las verduras?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="23" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-23">1</div></div>
+      <div class="val-desc" id="vd-23">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">24</span><span>¿Cuánto tiempo permanece un sabor en la boca?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="24" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-24">1</div></div>
+      <div class="val-desc" id="vd-24">ni me gusta ni me disgusta</div>
+    </div>
+  </div>
+
+  <!-- Comentario y envío -->
+  <div class="card">
+    <div style="font-size:14px;font-weight:500;color:#1a1a1a;display:flex;align-items:center;gap:8px;">
+      <i class="ti ti-message" style="color:#3B6D11;font-size:17px;"></i> Comentario libre
+    </div>
+    <div style="font-size:13px;color:#6b7280;margin-top:4px;">Observaciones, sugerencias o cualquier detalle adicional</div>
+    <textarea id="comentario" placeholder="Escribí acá cualquier observación que quieras agregar sobre la tartaleta..."></textarea>
+    <button class="submit-btn" onclick="enviarFeedback()">
+      <i class="ti ti-send" style="font-size:16px;"></i>
+      Enviar evaluación completa
+    </button>
+    <div class="success-box" id="success">
+      <p>¡Evaluación enviada correctamente! 🌿</p>
+      <span>Gracias por tu tiempo. El equipo de nutrición va a revisar tus respuestas.</span>
+    </div>
+  </div>
+
+</div>
+ 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/encuesta.js"></script>
+
+</body>
+</html>
