@@ -380,3 +380,106 @@ header {
   margin-right: calc(50% - 50vw);
   margin-top: -2rem;
 }
+
+.member-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-top:10px;
+}
+
+.member-card{
+    background:#fafafa;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:0.2s;
+}
+
+.member-card:hover{
+    transform:translateY(-2px);
+    border-color:#C0DD97;
+    box-shadow:0 4px 12px rgba(0,0,0,.05);
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#EAF3DE;
+    border:1px solid #C0DD97;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    color:#27500A;
+    flex-shrink:0;
+}
+
+.member-name{
+    font-size:14px;
+    font-weight:600;
+    color:#1f2937;
+}
+
+.member-role{
+    font-size:12px;
+    color:#6b7280;
+}
+
+#encuesta-btn{
+    background:#3B6D11;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:12px 24px;
+    font-size:15px;
+    font-weight:500;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:.2s;
+}
+
+#encuesta-btn:hover{
+    background:#27500A;
+    transform:translateY(-1px);
+}
+
+#encuesta-btn:disabled{
+    opacity:.7;
+    cursor:not-allowed;
+}
+
+.card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:24px;
+    box-shadow:0 4px 20px rgba(0,0,0,.04);
+}
+
+.hero{
+    width:100%;
+    height:420px;
+    position:relative;
+    background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url('misstartaleta.png');
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-title{
+    font-size:48px;
+    font-weight:700;
+}
+
+.hero-sub{
+    max-width:700px;
+    font-size:18px;
+}
