@@ -41,41 +41,95 @@ const SECCIONES = [
   }
 ]
 
-let graficoBarra = null
-let graficoRadar  = null
+let graficoBarra   = null
+let graficoRadar   = null
+let graficoEdad    = null
+let graficoGenero  = null
+let datosGlobales = [];
 
 async function cargarDatos() {
-  const estado = document.getElementById('estado')
-  const total  = document.getElementById('total')
-  estado.textContent = 'Cargando resultados...'
-  total.textContent  = ''
+  const estado = document.getElementById('estado');
+  const total  = document.getElementById('total');
+  estado.textContent = 'Cargando resultados...';
+  total.textContent  = '';
 
   const { data, error } = await db
     .from('encuestas')
     .select('*')
-    .order('created_at', { ascending: false })
+    .order('created_at', { ascending: false });
 
   if (error) {
-    estado.textContent = 'Error al cargar los datos.'
-    console.error(error)
-    return
+    estado.textContent = 'Error al cargar los datos.';
+    console.error(error);
+    return;
+  }
+  // Guardamos todo en la variable global
+  datosGlobales = data; 
+  
+  // Llamamos a los filtros (que a su vez dibujan los gráficos)
+  aplicarFiltros(); 
+}
+
+function aplicarFiltros() {
+  // 1. Vemos qué casillas están tildadas
+  const generosSeleccionados = Array.from(document.querySelectorAll('.filtro-genero:checked')).map(cb => cb.value);
+  const edadesSeleccionadas = Array.from(document.querySelectorAll('.filtro-edad:checked')).map(cb => cb.value);
+
+  // 2. Filtramos la base de datos completa
+  const datosFiltrados = datosGlobales.filter(e => {
+    
+    // --- Lógica Género ---
+    let generoMatch = false;
+    if (e.genero && generosSeleccionados.includes(e.genero)) {
+      generoMatch = true;
+    } else if (!e.genero && generosSeleccionados.includes('Sin dato')) {
+      generoMatch = true;
+    }
+
+    // --- Lógica Edad ---
+    let edadGrupo = null;
+    if (e.edad != null && typeof e.edad === 'number') {
+      if (e.edad < 20)      edadGrupo = '< 20';
+      else if (e.edad < 30) edadGrupo = '20–29';
+      else if (e.edad < 40) edadGrupo = '30–39';
+      else if (e.edad < 50) edadGrupo = '40–49';
+      else if (e.edad < 60) edadGrupo = '50–59';
+      else                  edadGrupo = '60+';
+    }
+
+    let edadMatch = false;
+    if (edadGrupo && edadesSeleccionadas.includes(edadGrupo)) {
+      edadMatch = true;
+    } else if (!edadGrupo && edadesSeleccionadas.includes('Sin dato')) {
+      edadMatch = true;
+    }
+
+    // El registro debe cumplir con AMBOS filtros (Género y Edad)
+    return generoMatch && edadMatch;
+  });
+
+  // 3. Actualizamos los textos de arriba
+  const estado = document.getElementById('estado');
+  const total = document.getElementById('total');
+
+  total.textContent = datosFiltrados.length + ' respuesta' + (datosFiltrados.length !== 1 ? 's' : '');
+
+  if (datosFiltrados.length === 0) {
+    estado.textContent = 'No hay encuestas que coincidan con estos filtros.';
+  } else {
+    estado.textContent = '';
   }
 
-  estado.textContent = ''
-  total.textContent  = data.length + ' respuesta' + (data.length !== 1 ? 's' : '')
+  // 4. Mandamos a renderizar todo nuevamente con la info ya recortada
+  const promediosPorSeccion = calcularPromediosPorSeccion(datosFiltrados);
+  const seccionesConDetalle = calcularDetallePorPregunta(datosFiltrados);
 
-  if (data.length === 0) {
-    estado.textContent = 'Todavía no hay respuestas.'
-    return
-  }
-
-  const promediosPorSeccion = calcularPromediosPorSeccion(data)
-  const seccionesConDetalle = calcularDetallePorPregunta(data)
-
-  renderBarras(promediosPorSeccion)
-  renderRadar(promediosPorSeccion)
-  renderDetalle(seccionesConDetalle)
-  renderTabla(data.slice(0, 20))
+  renderBarras(promediosPorSeccion);
+  renderRadar(promediosPorSeccion);
+  renderDetalle(seccionesConDetalle);
+  renderTabla(datosFiltrados.slice(0, 20));
+  renderEdad(datosFiltrados);
+  renderGenero(datosFiltrados);
 }
 
 // Para sliders: promedio numérico. Para Sí/No: ignorar en el promedio de sección (usar solo sliders)
@@ -230,6 +284,96 @@ function renderTabla(data) {
       <td class="comentario" title="${e.comentario || ''}">${e.comentario || '—'}</td>
     `
     tbody.appendChild(tr)
+  })
+}
+
+function renderEdad(data) {
+  const grupos = {
+    '< 20': 0, '20–29': 0, '30–39': 0,
+    '40–49': 0, '50–59': 0, '60+': 0
+  }
+  data.forEach(e => {
+    const edad = e.edad
+    if (edad == null || typeof edad !== 'number') return
+    if (edad < 20)       grupos['< 20']++
+    else if (edad < 30)  grupos['20–29']++
+    else if (edad < 40)  grupos['30–39']++
+    else if (edad < 50)  grupos['40–49']++
+    else if (edad < 60)  grupos['50–59']++
+    else                 grupos['60+']++
+  })
+
+  const ctx = document.getElementById('grafico-edad').getContext('2d')
+  if (graficoEdad) graficoEdad.destroy()
+  graficoEdad = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(grupos),
+      datasets: [{
+        label: 'Respuestas',
+        data: Object.values(grupos),
+        backgroundColor: '#3B6D1122',
+        borderColor: '#3B6D11',
+        borderWidth: 1.5,
+        borderRadius: 8,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { stepSize: 1, precision: 0 },
+          grid: { color: 'rgba(0,0,0,0.05)' }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  })
+}
+
+function renderGenero(data) {
+  const conteo = {}
+  data.forEach(e => {
+    const g = e.genero
+    if (!g) return
+    conteo[g] = (conteo[g] || 0) + 1
+  })
+
+  const colores = {
+    'Masculino':           '#378add',
+    'Femenino':            '#d4537e',
+    'Prefiero no decirlo': '#ba7517'
+  }
+
+  const labels = Object.keys(conteo)
+  const valores = labels.map(l => conteo[l])
+  const bgColors = labels.map(l => colores[l] || '#999')
+
+  const ctx = document.getElementById('grafico-genero').getContext('2d')
+  if (graficoGenero) graficoGenero.destroy()
+  graficoGenero = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels,
+      datasets: [{
+        data: valores,
+        backgroundColor: bgColors.map(c => c + '99'),
+        borderColor: bgColors,
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { font: { size: 13 }, padding: 16 }
+        }
+      }
+    }
   })
 }
 
