@@ -272,6 +272,8 @@ function renderTabla(data) {
   tbody.innerHTML = ''
   data.forEach(e => {
     const fecha = new Date(e.created_at).toLocaleDateString('es-AR')
+    const edadTexto = e.edad ? e.edad : '-';
+    const generoTexto = e.genero ? e.genero : '-';
     const promediosFila = SECCIONES.map(s => {
       const sliders = s.columnas.filter(c => c.tipo === 'slider')
       const vals = sliders.map(({ col }) => e[col]).filter(v => v != null && typeof v === 'number')
@@ -280,6 +282,8 @@ function renderTabla(data) {
     const tr = document.createElement('tr')
     tr.innerHTML = `
       <td>${fecha}</td>
+      <td>${edadTexto}</td>
+      <td>${generoTexto}</td>
       ${promediosFila.map(p => `<td><span class="badge badge-${badgeClass(parseFloat(p))}">${p}</span></td>`).join('')}
       <td class="comentario" title="${e.comentario || ''}">${e.comentario || '—'}</td>
     `
