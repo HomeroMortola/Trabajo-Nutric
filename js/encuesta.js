@@ -29,7 +29,7 @@ const LABELS = {
   10: 'me gusta extremadamente'
 }
 
-const TOTAL = 10
+const TOTAL = 12
 const touched = new Set()
 
 // Respuestas de pills (Sí/No)
@@ -87,6 +87,29 @@ function leerRespuestas() {
     if (col && pillAnswers[q]) datos[col] = pillAnswers[q]
   })
 
+  const fechaNac = document.getElementById('fecha-nac').value;
+  if (fechaNac) {
+    // Calculamos la edad a partir de la fecha
+    const fn = new Date(fechaNac);
+    const hoy = new Date();
+    let edadCalculada = hoy.getFullYear() - fn.getFullYear();
+    const mes = hoy.getMonth() - fn.getMonth();
+    
+    // Si todavía no cumplió años este año, le restamos 1
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fn.getDate())) {
+      edadCalculada--;
+    }
+    
+    datos.edad = edadCalculada; // Guardamos el número en Supabase
+  }
+
+  if (pillAnswers['genero']) {
+    datos.genero = pillAnswers['genero'];
+  }
+  if (pillAnswers['genero']) {
+    datos.genero = pillAnswers['genero'];
+  }
+
   datos.comentario = document.getElementById('comentario').value.trim() || null
   return datos
 }
@@ -134,6 +157,8 @@ async function enviarFeedback() {
       document.querySelectorAll('.rpill').forEach(p => p.classList.remove('active'))
       Object.keys(pillAnswers).forEach(k => delete pillAnswers[k])
 
+      document.getElementById('fecha-nac').value = '';
+      document.getElementById('fecha-error').style.display = 'none';
       document.getElementById('comentario').value = ''
       touched.clear()
       updateProgress()

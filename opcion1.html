@@ -29,26 +29,42 @@
 
 <div class="content">
 
-  <!-- QUIÉNES SOMOS -->
-  <div class="card" style="margin-top:1.5rem;margin-bottom:0.5rem;">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;">
-      <div class="section-icon"><i class="ti ti-users"></i></div>
-      <div class="section-title-text" style="font-size:15px;">¿Quiénes somos?</div>
-    </div>
-    <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;margin-bottom:0.6rem;">
-      Somos un grupo de estudiantes de <strong>2° año de la Licenciatura en Nutrición</strong> cursando la materia <strong>Química de los Alimentos</strong>.
-    </p>
-    <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;margin-bottom:0.6rem;">
-      Nos interesa entender qué hay detrás de lo que comemos: cómo los ingredientes interactúan, qué los hace nutritivos y cómo lograr que un alimento sea saludable y rico a la vez.
-    </p>
-    <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;">
-      Este trabajo representa nuestro compromiso con una nutrición que sea <strong>sustentable</strong>, basada en evidencia y pensada para las personas.
-    </p>
-  </div>
-
   <!-- Progreso -->
-  <div class="progress-label" id="progress-label" style="margin-top:1.5rem;">0 de 10 respondidas</div>
+  <div class="progress-label" id="progress-label" style="margin-top:1.5rem;">0 de 12 respondidas</div>
   <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-user"></i></div>
+    <div class="section-title-text">Datos Generales</div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text">
+        <span class="q-num" style="background: transparent; color: #27500A; font-size: 16px;"><i class="ti ti-calendar"></i></span>
+        <span>¿Cuál es tu fecha de nacimiento?</span>
+      </div>
+      
+      <div style="margin-top: 8px;">
+        <input type="date" id="fecha-nac" 
+               style="padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db; font-family: inherit; font-size: 14px; outline: none; background: #fff; color: #1a1a1a; cursor: pointer;" 
+               onchange="validarFechaNac()">
+      </div>
+
+      <div id="fecha-error" style="font-size: 11px; color: #c00000; margin-top: 6px; display: none;">La fecha no puede ser en el futuro.</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text">
+        <span class="q-num" style="background: transparent; color: #27500A; font-size: 16px;"><i class="ti ti-gender-intersex"></i></span>
+        <span>¿Con qué género te identificás?</span>
+      </div>
+      <div class="recipe-pills" id="pills-genero">
+        <div class="rpill" onclick="selectPill(this, 'genero', 'Masculino')">Masculino</div>
+        <div class="rpill" onclick="selectPill(this, 'genero', 'Femenino')">Femenino</div>
+        <div class="rpill" onclick="selectPill(this, 'genero', 'Prefiero no decirlo')">Prefiero no decirlo</div>
+      </div>
+    </div>
+  </div>
 
   <!-- SECCIÓN 1: VISTA -->
   <div class="section-header">
@@ -175,15 +191,6 @@
 <script src="js/encuesta.js"></script>
 
 <script>
-// Pill (Sí/No) selection handler
-const pillAnswers = {};
-function selectPill(el, q, val) {
-  const container = document.getElementById('pills-' + q);
-  container.querySelectorAll('.rpill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  pillAnswers[q] = val;
-  updateProgress();
-}
 
 // Override updateSlider to also trigger progress if defined in encuesta.js
 // Fallback implementation in case encuesta.js isn't loaded yet
@@ -199,11 +206,33 @@ if (typeof updateSlider === 'undefined') {
     input.style.background = `linear-gradient(to right, #3B6D11 ${pct}%, #EAF3DE ${pct}%)`;
   }
 }
-
+function validarFechaNac() {
+  const input = document.getElementById('fecha-nac');
+  const err = document.getElementById('fecha-error');
+  
+  if (input.value) {
+    const fechaSeleccionada = new Date(input.value);
+    const hoy = new Date();
+    
+    // Verificamos que no haya nacido en el futuro
+    if (fechaSeleccionada > hoy) {
+      err.style.display = 'block';
+      touched.delete('edad');
+    } else {
+      err.style.display = 'none';
+      touched.add('edad');
+    }
+  } else {
+    err.style.display = 'none';
+    touched.delete('edad');
+  }
+  
+  updateProgress();
+}
 function updateProgress() {
-  const TOTAL = 10;
+  const TOTAL = 12;
   const sliderQs = [1,2,4,6,7,8,9,10];
-  const pillQs = [3,5];
+  const pillQs = [3,5, 'genero'];
   let answered = 0;
   sliderQs.forEach(q => {
     const el = document.querySelector(`input[data-q="${q}"]`);
@@ -212,6 +241,10 @@ function updateProgress() {
   pillQs.forEach(q => {
     if (pillAnswers[q]) answered++;
   });
+
+  const fechaVal = document.getElementById('fecha-nac').value;
+  if (fechaVal && new Date(fechaVal) <= new Date()) answered++;
+
   const pct = Math.round((answered / TOTAL) * 100);
   const bar = document.getElementById('progress-bar');
   const label = document.getElementById('progress-label');
