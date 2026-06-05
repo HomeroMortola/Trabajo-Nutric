@@ -3,54 +3,40 @@ const SECCIONES = [
     label: 'Vista',
     color: '#378add',
     columnas: [
-      { col: 'q1_apariencia_general',     label: 'Apariencia general' },
-      { col: 'q2_intensidad_color',        label: 'Intensidad del color' },
-      { col: 'q3_uniformidad_forma',       label: 'Uniformidad de forma' },
-      { col: 'q4_atractivo_emplatado',     label: 'Atractivo emplatado' },
-      { col: 'q5_aspecto_masa',            label: 'Aspecto masa integral' },
-      { col: 'q6_distincion_ingredientes', label: 'Distinción ingredientes' },
+      { col: 'q1_apariencia_general',      label: 'Apariencia general',        tipo: 'slider' },
+      { col: 'q2_intensidad_color',         label: 'Intensidad del color',       tipo: 'slider' },
+      { col: 'q3_distincion_ingredientes',  label: 'Distinción ingredientes',    tipo: 'sinon'  },
     ]
   },
   {
     label: 'Olfato',
     color: '#1d9e75',
     columnas: [
-      { col: 'q7_intensidad_olor',         label: 'Intensidad olor' },
-      { col: 'q8_primera_impresion_olfat', label: 'Primera impresión olfativa' },
-      { col: 'q9_olor_verduras',           label: 'Olor verduras' },
-      { col: 'q10_olor_legumbres',         label: 'Olor legumbres' },
-      { col: 'q11_aroma_masa_integral',    label: 'Aroma masa integral' },
+      { col: 'q4_intensidad_olor',  label: 'Intensidad olor',    tipo: 'slider' },
+      { col: 'q5_olor_verduras',    label: 'Olor a verduras',    tipo: 'sinon'  },
     ]
   },
   {
     label: 'Tacto y oído',
     color: '#d4537e',
     columnas: [
-      { col: 'q12_temperatura_muestra', label: 'Temperatura muestra' },
-      { col: 'q13_crocancia',           label: 'Crocancia' },
-      { col: 'q14_consistencia_masa',   label: 'Consistencia masa' },
+      { col: 'q6_temperatura', label: 'Temperatura muestra', tipo: 'slider' },
+      { col: 'q7_crocancia',   label: 'Crocancia',           tipo: 'slider' },
     ]
   },
   {
     label: 'Gusto y boca',
     color: '#e85d26',
     columnas: [
-      { col: 'q15_intensidad_salado',   label: 'Intensidad salado' },
-      { col: 'q16_sabor_amargo',        label: 'Sabor amargo' },
-      { col: 'q17_sabor_picante',       label: 'Sabor picante' },
-      { col: 'q18_integracion_sabores', label: 'Integración sabores' },
-      { col: 'q19_textura_relleno',     label: 'Textura relleno' },
-      { col: 'q20_textura_poroto',      label: 'Textura poroto' },
-      { col: 'q21_humedad_bocado',      label: 'Humedad bocado' },
+      { col: 'q8_integracion_sabores', label: 'Integración de sabores', tipo: 'slider' },
     ]
   },
   {
-    label: 'Sabor post-ingesta',
+    label: 'Sabor',
     color: '#ba7517',
     columnas: [
-      { col: 'q22_sabor_general',          label: 'Sabor general' },
-      { col: 'q23_identificacion_sabores', label: 'Identificación sabores' },
-      { col: 'q24_persistencia_sabor',     label: 'Persistencia del sabor' },
+      { col: 'q9_sabor_general',      label: 'Sabor general',          tipo: 'slider' },
+      { col: 'q10_permanencia_sabor', label: 'Permanencia del sabor',  tipo: 'slider' },
     ]
   }
 ]
@@ -83,8 +69,8 @@ async function cargarDatos() {
     return
   }
 
-  const promediosPorSeccion  = calcularPromediosPorSeccion(data)
-  const seccionesConDetalle  = calcularDetallePorPregunta(data)
+  const promediosPorSeccion = calcularPromediosPorSeccion(data)
+  const seccionesConDetalle = calcularDetallePorPregunta(data)
 
   renderBarras(promediosPorSeccion)
   renderRadar(promediosPorSeccion)
@@ -92,14 +78,24 @@ async function cargarDatos() {
   renderTabla(data.slice(0, 20))
 }
 
+// Para sliders: promedio numérico. Para Sí/No: ignorar en el promedio de sección (usar solo sliders)
 function promedio(vals) {
-  const limpios = vals.filter(v => v != null)
+  const limpios = vals.filter(v => v != null && typeof v === 'number')
   return limpios.length ? +(limpios.reduce((a, b) => a + b, 0) / limpios.length).toFixed(1) : 0
+}
+
+function pctSi(vals) {
+  const limpios = vals.filter(v => v != null)
+  if (!limpios.length) return null
+  const si = limpios.filter(v => v === 'Sí').length
+  return Math.round((si / limpios.length) * 100)
 }
 
 function calcularPromediosPorSeccion(data) {
   return SECCIONES.map(s => {
-    const todos = s.columnas.flatMap(({ col }) => data.map(e => e[col]))
+    // Solo columnas tipo slider para el gráfico de barras/radar
+    const sliders = s.columnas.filter(c => c.tipo === 'slider')
+    const todos = sliders.flatMap(({ col }) => data.map(e => e[col]))
     return promedio(todos)
   })
 }
@@ -107,7 +103,12 @@ function calcularPromediosPorSeccion(data) {
 function calcularDetallePorPregunta(data) {
   return SECCIONES.map(s => ({
     ...s,
-    promedios: s.columnas.map(({ col }) => promedio(data.map(e => e[col])))
+    resultados: s.columnas.map(c => {
+      if (c.tipo === 'sinon') {
+        return { tipo: 'sinon', pct: pctSi(data.map(e => e[c.col])) }
+      }
+      return { tipo: 'slider', val: promedio(data.map(e => e[c.col])) }
+    })
   }))
 }
 
@@ -178,15 +179,28 @@ function renderDetalle(secciones) {
     div.innerHTML = `
       <h2 style="color:${s.color};border-left:3px solid ${s.color};padding-left:8px;">${s.label}</h2>
       <div class="detalle-lista">
-        ${s.columnas.map((c, i) => `
-          <div class="detalle-fila">
-            <span class="detalle-label">${c.label}</span>
-            <div class="detalle-barra-wrap">
-              <div class="detalle-barra" style="width:${s.promedios[i] * 10}%;background:${s.color}22;border-right:2px solid ${s.color}"></div>
-            </div>
-            <span class="detalle-val">${s.promedios[i]}</span>
-          </div>
-        `).join('')}
+        ${s.columnas.map((c, i) => {
+          const r = s.resultados[i]
+          if (r.tipo === 'sinon') {
+            const pct = r.pct !== null ? r.pct + '% dijeron Sí' : '—'
+            return `
+              <div class="detalle-fila">
+                <span class="detalle-label">${c.label}</span>
+                <div class="detalle-barra-wrap">
+                  <div class="detalle-barra" style="width:${r.pct ?? 0}%;background:${s.color}22;border-right:2px solid ${s.color}"></div>
+                </div>
+                <span class="detalle-val" style="font-size:0.78rem;min-width:90px;">${pct}</span>
+              </div>`
+          }
+          return `
+            <div class="detalle-fila">
+              <span class="detalle-label">${c.label}</span>
+              <div class="detalle-barra-wrap">
+                <div class="detalle-barra" style="width:${r.val * 10}%;background:${s.color}22;border-right:2px solid ${s.color}"></div>
+              </div>
+              <span class="detalle-val">${r.val}</span>
+            </div>`
+        }).join('')}
       </div>
     `
     contenedor.appendChild(div)
@@ -194,8 +208,8 @@ function renderDetalle(secciones) {
 }
 
 function badgeClass(val) {
-  if (val <= 4)  return 'low'
-  if (val <= 7)  return 'mid'
+  if (val <= 4) return 'low'
+  if (val <= 7) return 'mid'
   return 'high'
 }
 
@@ -205,7 +219,8 @@ function renderTabla(data) {
   data.forEach(e => {
     const fecha = new Date(e.created_at).toLocaleDateString('es-AR')
     const promediosFila = SECCIONES.map(s => {
-      const vals = s.columnas.map(({ col }) => e[col]).filter(v => v != null)
+      const sliders = s.columnas.filter(c => c.tipo === 'slider')
+      const vals = sliders.map(({ col }) => e[col]).filter(v => v != null && typeof v === 'number')
       return vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : '—'
     })
     const tr = document.createElement('tr')

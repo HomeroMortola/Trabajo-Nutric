@@ -2,45 +2,38 @@
 const COLUMNAS = {
   1:  'q1_apariencia_general',
   2:  'q2_intensidad_color',
-  3:  'q3_uniformidad_forma',
-  4:  'q4_atractivo_emplatado',
-  5:  'q5_aspecto_masa',
-  6:  'q6_distincion_ingredientes',
-  7:  'q7_intensidad_olor',
-  8:  'q8_primera_impresion_olfat',
-  9:  'q9_olor_verduras',
-  10: 'q10_olor_legumbres',
-  11: 'q11_aroma_masa_integral',
-  12: 'q12_temperatura_muestra',
-  13: 'q13_crocancia',
-  14: 'q14_consistencia_masa',
-  15: 'q15_intensidad_salado',
-  16: 'q16_sabor_amargo',
-  17: 'q17_sabor_picante',
-  18: 'q18_integracion_sabores',
-  19: 'q19_textura_relleno',
-  20: 'q20_textura_poroto',
-  21: 'q21_humedad_bocado',
-  22: 'q22_sabor_general',
-  23: 'q23_identificacion_sabores',
-  24: 'q24_persistencia_sabor'
+  3:  'q3_distincion_ingredientes',  // "Sí" / "No"
+  4:  'q4_intensidad_olor',
+  5:  'q5_olor_verduras',            // "Sí" / "No"
+  6:  'q6_temperatura',
+  7:  'q7_crocancia',
+  8:  'q8_integracion_sabores',
+  9:  'q9_sabor_general',
+  10: 'q10_permanencia_sabor'
 }
 
-// Labels hedónicos para actualizar el slider en tiempo real
+// Preguntas que son Sí/No (pills), no sliders
+const PILL_QS = new Set([3, 5])
+
+// Labels hedónicos para sliders
 const LABELS = {
-  1: 'me disgusta muchísimo',
-  2: 'me disgusta mucho',
-  3: 'me disgusta moderadamente',
-  4: 'me disgusta levemente',
-  5: 'ni me gusta ni me disgusta',
-  6: 'me gusta levemente',
-  7: 'me gusta moderadamente',
-  8: 'me gusta mucho',
-  9: 'me gusta muchísimo',
+  1:  'me disgusta muchísimo',
+  2:  'me disgusta mucho',
+  3:  'me disgusta moderadamente',
+  4:  'me disgusta levemente',
+  5:  'ni me gusta ni me disgusta',
+  6:  'me gusta levemente',
+  7:  'me gusta moderadamente',
+  8:  'me gusta mucho',
+  9:  'me gusta muchísimo',
   10: 'me gusta extremadamente'
 }
 
+const TOTAL = 10
 const touched = new Set()
+
+// Respuestas de pills (Sí/No)
+const pillAnswers = {}
 
 // Actualiza visual del slider
 function updateSlider(el) {
@@ -50,15 +43,25 @@ function updateSlider(el) {
   el.style.background = `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
   document.getElementById('vb-' + q).textContent = val
   document.getElementById('vd-' + q).textContent = LABELS[val]
-  touched.add(q)
+  touched.add(String(q))
+  updateProgress()
+}
+
+// Selección de pill (Sí/No)
+function selectPill(el, q, val) {
+  const container = document.getElementById('pills-' + q)
+  container.querySelectorAll('.rpill').forEach(p => p.classList.remove('active'))
+  el.classList.add('active')
+  pillAnswers[q] = val
+  touched.add(String(q))
   updateProgress()
 }
 
 // Barra de progreso
 function updateProgress() {
   const n = touched.size
-  document.getElementById('progress-label').textContent = n + ' de 24 respondidas'
-  document.getElementById('progress-bar').style.width = (n / 24 * 100) + '%'
+  document.getElementById('progress-label').textContent = n + ' de ' + TOTAL + ' respondidas'
+  document.getElementById('progress-bar').style.width = (n / TOTAL * 100) + '%'
 }
 
 // Inicializar sliders al cargar
@@ -67,22 +70,31 @@ document.querySelectorAll('input[type=range]').forEach(el => {
   el.style.background = `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
 })
 
-// Leer todos los sliders y armar el objeto para Supabase
+// Leer todas las respuestas y armar objeto para Supabase
 function leerRespuestas() {
   const datos = {}
+
+  // Sliders
   document.querySelectorAll('input[type=range]').forEach(el => {
     const num = parseInt(el.dataset.q)
     const col = COLUMNAS[num]
     if (col) datos[col] = parseInt(el.value)
   })
+
+  // Pills (Sí/No)
+  PILL_QS.forEach(q => {
+    const col = COLUMNAS[q]
+    if (col && pillAnswers[q]) datos[col] = pillAnswers[q]
+  })
+
   datos.comentario = document.getElementById('comentario').value.trim() || null
   return datos
 }
 
-// Validar que todas las preguntas fueron tocadas
+// Validar que todas las preguntas fueron respondidas
 function validar() {
-  if (touched.size < 24) {
-    const faltantes = 24 - touched.size
+  if (touched.size < TOTAL) {
+    const faltantes = TOTAL - touched.size
     return `Faltan ${faltantes} pregunta${faltantes > 1 ? 's' : ''} por responder.`
   }
   return null
@@ -93,14 +105,12 @@ async function enviarFeedback() {
   const btn = document.querySelector('.submit-btn')
   const successBox = document.getElementById('success')
 
-  // Validación
   const error = validar()
   if (error) {
     alert(error)
     return
   }
 
-  // Estado de carga
   btn.disabled = true
   btn.innerHTML = '<i class="ti ti-loader" style="font-size:16px;"></i> Enviando...'
 
@@ -110,17 +120,20 @@ async function enviarFeedback() {
     const { error: sbError } = await db.from('encuestas').insert([datos])
     if (sbError) throw sbError
 
-    // Éxito
     successBox.style.display = 'block'
     successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     btn.style.display = 'none'
 
-    // Resetear sliders después de 2 segundos
     setTimeout(() => {
+      // Resetear sliders
       document.querySelectorAll('input[type=range]').forEach(el => {
-        el.value = 5
+        el.value = 1
         updateSlider(el)
       })
+      // Resetear pills
+      document.querySelectorAll('.rpill').forEach(p => p.classList.remove('active'))
+      Object.keys(pillAnswers).forEach(k => delete pillAnswers[k])
+
       document.getElementById('comentario').value = ''
       touched.clear()
       updateProgress()

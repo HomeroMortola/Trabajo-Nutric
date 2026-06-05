@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación Sensorial — Tartaletas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hero">
+  <img class="hero-img" src="misstartaleta.jpeg" alt="Tartaleta saludable">
+  <div class="hero-overlay">
+    <div class="hero-badge">
+      Tartaleta Nutritiva
+    </div>
+    <h1 class="hero-title">
+      Tartaleta Integral Nutritiva
+    </h1>
+    <p class="hero-sub">
+      Análisis sensorial completo basado en apariencia,
+      aroma, textura y sabor del producto alimenticio.
+    </p>
+  </div>
+</div>
+
+<header style="height:0;margin:0;padding:0;"></header>
+
+<div class="content">
+
+  <!-- QUIÉNES SOMOS -->
+  <div class="card" style="margin-top:1.5rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;">
+      <div class="section-icon"><i class="ti ti-users"></i></div>
+      <div class="section-title-text" style="font-size:15px;">¿Quiénes somos?</div>
+    </div>
+    <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;margin-bottom:0.6rem;">
+      Somos un grupo de estudiantes de <strong>2° año de la Licenciatura en Nutrición</strong> cursando la materia <strong>Química de los Alimentos</strong>.
+    </p>
+    <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;margin-bottom:0.6rem;">
+      Nos interesa entender qué hay detrás de lo que comemos: cómo los ingredientes interactúan, qué los hace nutritivos y cómo lograr que un alimento sea saludable y rico a la vez.
+    </p>
+    <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;">
+      Este trabajo representa nuestro compromiso con una nutrición que sea <strong>sustentable</strong>, basada en evidencia y pensada para las personas.
+    </p>
+  </div>
+
+  <!-- Progreso -->
+  <div class="progress-label" id="progress-label" style="margin-top:1.5rem;">0 de 10 respondidas</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+
+  <!-- SECCIÓN 1: VISTA -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-eye"></i></div>
+    <div class="section-title-text">Vista <span style="font-weight:400;color:#6b7280;font-size:13px;">— Antes de probar</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">1</span><span>¿Cómo calificarías la apariencia general de la tartaleta?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="1" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-1">1</div></div>
+      <div class="val-desc" id="vd-1">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">2</span><span>¿Cómo percibís la intensidad del color de la tartaleta?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="2" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-2">1</div></div>
+      <div class="val-desc" id="vd-2">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <!-- Pregunta 3: Sí/No -->
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">3</span><span>Al mirar el relleno, ¿se logran distinguir a simple vista los diferentes ingredientes?</span></div>
+      <div class="recipe-pills" id="pills-3">
+        <div class="rpill" onclick="selectPill(this, 3, 'Sí')">Sí</div>
+        <div class="rpill" onclick="selectPill(this, 3, 'No')">No</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: OLFATO -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-wind"></i></div>
+    <div class="section-title-text">Olfato <span style="font-weight:400;color:#6b7280;font-size:13px;">— Antes de probar</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">4</span><span>¿Qué tan intenso es el olor que desprende la tartaleta?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="4" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-4">1</div></div>
+      <div class="val-desc" id="vd-4">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <!-- Pregunta 5: Sí/No -->
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">5</span><span>¿Se percibe el olor a las verduras del relleno (cebolla, morrón, espinaca)?</span></div>
+      <div class="recipe-pills" id="pills-5">
+        <div class="rpill" onclick="selectPill(this, 5, 'Sí')">Sí</div>
+        <div class="rpill" onclick="selectPill(this, 5, 'No')">No</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: TACTO Y OÍDO -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-hand-finger"></i></div>
+    <div class="section-title-text">Tacto y Oído <span style="font-weight:400;color:#6b7280;font-size:13px;">— Al corte y primer contacto</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">6</span><span>¿Cómo sentís la temperatura de la muestra al recibirla?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="6" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-6">1</div></div>
+      <div class="val-desc" id="vd-6">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">7</span><span>Al cortar o tocar la masa, ¿qué nivel de crocancia percibís?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="7" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-7">1</div></div>
+      <div class="val-desc" id="vd-7">ni me gusta ni me disgusta</div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: GUSTO Y BOCA -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-heart"></i></div>
+    <div class="section-title-text">Gusto y Boca <span style="font-weight:400;color:#6b7280;font-size:13px;">— Durante el consumo</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">8</span><span>¿Cómo considerarías que los sabores de los distintos ingredientes están bien integrados entre sí?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="8" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-8">1</div></div>
+      <div class="val-desc" id="vd-8">ni me gusta ni me disgusta</div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 5: SABOR POST-INGESTA -->
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-star"></i></div>
+    <div class="section-title-text">Sabor <span style="font-weight:400;color:#6b7280;font-size:13px;">— Después de ingerir</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">9</span><span>¿Cómo calificarías el sabor general de toda la tartaleta en boca?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="9" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-9">1</div></div>
+      <div class="val-desc" id="vd-9">ni me gusta ni me disgusta</div>
+    </div>
+    <div class="divider"></div>
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">10</span><span>¿Cuánto tiempo permanece un sabor en la boca?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="10" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-10">1</div></div>
+      <div class="val-desc" id="vd-10">ni me gusta ni me disgusta</div>
+    </div>
+  </div>
+
+  <!-- Comentario y envío -->
+  <div class="card">
+    <div style="font-size:14px;font-weight:500;color:#1a1a1a;display:flex;align-items:center;gap:8px;">
+      <i class="ti ti-message" style="color:#3B6D11;font-size:17px;"></i> Comentario libre
+    </div>
+    <div style="font-size:13px;color:#6b7280;margin-top:4px;">Observaciones, sugerencias o cualquier detalle adicional</div>
+    <textarea id="comentario" placeholder="Escribí acá cualquier observación que quieras agregar sobre la tartaleta..."></textarea>
+    <button class="submit-btn" onclick="enviarFeedback()">
+      <i class="ti ti-send" style="font-size:16px;"></i>
+      Enviar evaluación completa
+    </button>
+    <div class="success-box" id="success">
+      <p>¡Evaluación enviada correctamente! 🌿</p>
+      <span>Gracias por tu tiempo. El equipo de nutrición va a revisar tus respuestas.</span>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/encuesta.js"></script>
+
+<script>
+// Pill (Sí/No) selection handler
+const pillAnswers = {};
+function selectPill(el, q, val) {
+  const container = document.getElementById('pills-' + q);
+  container.querySelectorAll('.rpill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  pillAnswers[q] = val;
+  updateProgress();
+}
+
+// Override updateSlider to also trigger progress if defined in encuesta.js
+// Fallback implementation in case encuesta.js isn't loaded yet
+if (typeof updateSlider === 'undefined') {
+  window.updateSlider = function(input) {
+    const q = input.dataset.q;
+    const val = input.value;
+    const vb = document.getElementById('vb-' + q);
+    if (vb) vb.textContent = val;
+    updateProgress();
+    // Update gradient
+    const pct = ((val - 1) / 9) * 100;
+    input.style.background = `linear-gradient(to right, #3B6D11 ${pct}%, #EAF3DE ${pct}%)`;
+  }
+}
+
+function updateProgress() {
+  const TOTAL = 10;
+  const sliderQs = [1,2,4,6,7,8,9,10];
+  const pillQs = [3,5];
+  let answered = 0;
+  sliderQs.forEach(q => {
+    const el = document.querySelector(`input[data-q="${q}"]`);
+    if (el && parseInt(el.value) > 1) answered++;
+  });
+  pillQs.forEach(q => {
+    if (pillAnswers[q]) answered++;
+  });
+  const pct = Math.round((answered / TOTAL) * 100);
+  const bar = document.getElementById('progress-bar');
+  const label = document.getElementById('progress-label');
+  if (bar) bar.style.width = pct + '%';
+  if (label) label.textContent = answered + ' de ' + TOTAL + ' respondidas';
+}
+</script>
+
+<!-- Footer con acceso secreto -->
+<footer style="text-align:center;padding:2rem 1rem 3rem;margin-top:1rem;">
+  <span id="footer-trigger" style="font-size:11px;color:#d1d5db;cursor:default;user-select:none;">Formulario Nutricion 2026 v2026.05.31</span>
+  <div id="secret-box" style="display:none;margin-top:12px;">
+    <input id="secret-input" type="password" placeholder="Clave de acceso"
+      style="padding:7px 12px;border-radius:8px;border:1px solid #d1d5db;font-size:13px;font-family:inherit;outline:none;width:180px;text-align:center;"
+      onkeydown="checkSecret(event)">
+    <div id="secret-error" style="font-size:11px;color:#c00000;margin-top:6px;display:none;">Clave incorrecta</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('footer-trigger').addEventListener('click', function() {
+  const box = document.getElementById('secret-box');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  if (box.style.display === 'block') document.getElementById('secret-input').focus();
+});
+
+function checkSecret(e) {
+  if (e.key !== 'Enter') return;
+  const val = document.getElementById('secret-input').value.trim().toLowerCase();
+  if (val === 'nutriform2026') {
+    window.location.href = 'resultados.html';
+  } else {
+    const err = document.getElementById('secret-error');
+    err.style.display = 'block';
+    document.getElementById('secret-input').value = '';
+    setTimeout(() => { err.style.display = 'none'; }, 2000);
+  }
+}
+</script>
+
+</body>
+</html>
