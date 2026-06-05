@@ -75,14 +75,14 @@ textarea::placeholder{color:#9ca3af;}
   --radio: 12px;
 }
  
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--fondo);
-  color: var(--texto);
-  min-height: 100vh;
-  padding: 2rem 1rem 4rem;
+body{
+    font-family:'DM Sans', sans-serif;
+    background:var(--fondo);
+    color:var(--texto);
+    min-height:100vh;
+    margin:0;
+    padding:0;
 }
- 
 /* ── Header ── */
 header {
   max-width: 860px;
@@ -147,8 +147,7 @@ h1 {
 @media (max-width: 600px) {
   .graficos { grid-template-columns: 1fr; }
 }
- 
-/* ── Tarjetas ── */
+
 .tarjeta {
   background: var(--blanco);
   border: 1px solid var(--borde);
@@ -166,7 +165,6 @@ h1 {
   letter-spacing: 0.06em;
 }
  
-/* ── Detalle por pregunta ── */
 .detalle-seccion h2 {
   font-size: 0.8rem;
   font-weight: 600;
@@ -220,8 +218,7 @@ h1 {
 @media (max-width: 600px) {
   .detalle-label { width: 120px; font-size: 0.75rem; }
 }
- 
-/* ── Tabla ── */
+
 .tarjeta-tabla {
   background: var(--blanco);
   border: 1px solid var(--borde);
@@ -275,7 +272,7 @@ tbody td {
   text-overflow: ellipsis;
 }
  
-/* ── Badges ── */
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -291,7 +288,6 @@ tbody td {
 .badge-mid  { background: #faeeda; color: #633806; }
 .badge-high { background: #eaf3de; color: #27500a; }
  
-/* ── Botón actualizar ── */
 .btn-actualizar {
   display: inline-block;
   margin-top: 1.5rem;
@@ -308,17 +304,19 @@ tbody td {
 .btn-actualizar:hover { border-color: var(--acento); color: var(--acento); }
 
 .hero{
-  width:100%;
-  height:420px;
-  position:relative;
-  overflow:hidden;
+    width:100%;
+    height:60vh;
+    min-height:300px;
+    max-height:500px;
+    position:relative;
+    overflow:hidden;
 }
 
+.hero img,
 .hero-img{
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:brightness(0.6);
 }
 
 .hero-overlay{
@@ -333,18 +331,19 @@ tbody td {
 }
 
 .hero-title{
-  font-size:42px;
-  color:white;
-  font-weight:700;
-  margin-top:14px;
+    font-size:clamp(2rem, 8vw, 4rem);
+    line-height:1.1;
+    max-width:90%;
+    text-align:center;
+    margin:auto;
 }
 
 .hero-sub{
-  max-width:650px;
-  color:rgba(255,255,255,0.9);
-  font-size:17px;
-  line-height:1.7;
-  margin-top:12px;
+    max-width:600px;
+    width:90%;
+    margin:15px auto 0;
+    text-align:center;
+    line-height:1.6;
 }
 
 .hero-badge{
@@ -372,13 +371,6 @@ header {
     text-decoration: none;
     font-size: 18px;
     font-weight: 500;
-}
-
-.hero {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  margin-top: -2rem;
 }
 
 .member-grid{
@@ -475,11 +467,43 @@ header {
 }
 
 .hero-title{
-    font-size:48px;
+    font-size:clamp(1.8rem, 5vw, 3.5rem);
     font-weight:700;
+    line-height:1.1;
+    text-align:center;
+    color:white;
+    text-shadow:0 2px 8px rgba(0,0,0,.4);
 }
 
 .hero-sub{
-    max-width:700px;
-    font-size:18px;
+    font-size:0.95rem;
+    max-width:280px;
+    margin:12px auto 0;
+}
+
+@media (max-width:768px){
+
+    .hero{
+        height:70vh;
+    }
+
+    @media (max-width:768px){
+
+    .hero-title{
+        font-size:2.1rem;
+        font-weight:600;
+        max-width:260px;
+    }
+
+}
+
+    .hero-sub{
+        font-size:0.9rem;
+        max-width:300px;
+    }
+
+    .hero-badge{
+        font-size:0.9rem;
+    }
+
 }
