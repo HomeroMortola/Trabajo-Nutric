@@ -54,7 +54,7 @@ function updateSlider(el) {
 // Selección de pill (Sí/No)
 function selectPill(el, q, val) {
   const container = document.getElementById('pills-' + q)
-  container.querySelectorAll('.rpill').forEach(p => p.classList.remove('active'))
+  container.querySelectorAll('.rpill').forEach(p => { p.classList.remove('active'); })
   el.classList.add('active')
   pillAnswers[q] = val
   touched.add(String(q))
