@@ -179,3 +179,6 @@ async function enviarFeedback() {
     btn.innerHTML = '<i class="ti ti-send" style="font-size:16px;"></i> Enviar evaluación completa'
   }
 }
+
+window.selectPill = selectPill;
+window.enviarFeedback = enviarFeedback;
