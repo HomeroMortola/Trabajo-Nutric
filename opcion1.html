@@ -236,10 +236,14 @@ function updateProgress() {
   let answered = 0;
   sliderQs.forEach(q => {
     const el = document.querySelector(`input[data-q="${q}"]`);
-    if (el && parseInt(el.value) > 1) answered++;
+    if (el && parseInt(el.value, 10) > 1) {
+    answered++;
+    }
   });
   pillQs.forEach(q => {
-    if (pillAnswers[q]) answered++;
+    if (pillAnswers.has(q)) {
+      answered++;
+    }
   });
 
   const fechaVal = document.getElementById('fecha-nac').value;

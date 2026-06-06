@@ -15,6 +15,7 @@ const COLUMNAS = {
   9:  'q9_sabor_general',
   10: 'q10_permanencia_sabor'
 }
+const COLUMNAS_VALIDAS = new Set(Object.values(COLUMNAS))
 
 // Preguntas que son Sí/No (pills), no sliders
 const PILL_QS = new Set([3, 5])
@@ -42,9 +43,12 @@ const pillAnswers = new Map()
 // Actualiza visual del slider
 function updateSlider(el) {
   const q = el.dataset.q
-  const val = parseInt(el.value)
+  const val = parseInt(el.value, 10)
   const pct = ((val - 1) / 9) * 100
-  el.style.background = `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
+
+  el.style.background =
+    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
+
   document.getElementById('vb-' + q).textContent = val
   document.getElementById('vd-' + q).textContent = LABELS[val]
   touched.add(String(q))
@@ -54,9 +58,13 @@ function updateSlider(el) {
 // Selección de pill (Sí/No)
 function selectPill(el, q, val) {
   const container = document.getElementById('pills-' + q)
-  container.querySelectorAll('.rpill').forEach(p => { p.classList.remove('active'); })
+  container.querySelectorAll('.rpill').forEach(p => {
+    p.classList.remove('active')
+  })
+
   el.classList.add('active')
-  pillAnswers[q] = val
+  pillAnswers.set(q, val)
+
   touched.add(String(q))
   updateProgress()
 }
@@ -64,14 +72,18 @@ function selectPill(el, q, val) {
 // Barra de progreso
 function updateProgress() {
   const n = touched.size
-  document.getElementById('progress-label').textContent = n + ' de ' + TOTAL + ' respondidas'
-  document.getElementById('progress-bar').style.width = (n / TOTAL * 100) + '%'
+  document.getElementById('progress-label').textContent =
+    n + ' de ' + TOTAL + ' respondidas'
+  document.getElementById('progress-bar').style.width =
+    (n / TOTAL * 100) + '%'
 }
 
 // Inicializar sliders al cargar
 document.querySelectorAll('input[type=range]').forEach(el => {
-  const pct = ((parseInt(el.value) - 1) / 9) * 100
-  el.style.background = `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
+  const pct = ((parseInt(el.value, 10) - 1) / 9) * 100
+
+  el.style.background =
+    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
 })
 
 // Leer todas las respuestas y armar objeto para Supabase
@@ -80,41 +92,58 @@ function leerRespuestas() {
 
   // Sliders
   document.querySelectorAll('input[type=range]').forEach(el => {
-    const num = parseInt(el.dataset.q)
-    const col = COLUMNAS[num]
-    if (col) datos[col] = parseInt(el.value)
+    const num = parseInt(el.dataset.q, 10)
+
+    if (Object.hasOwn(COLUMNAS, num)) {
+      const col = COLUMNAS[num]
+
+      if (COLUMNAS_VALIDAS.has(col)) {
+        datos[col] = parseInt(el.value, 10)
+      }
+    }
   })
 
   // Pills (Sí/No)
   PILL_QS.forEach(q => {
-    const col = COLUMNAS[q]
-    if (col && pillAnswers[q]) datos[col] = pillAnswers[q]
+    if (Object.hasOwn(COLUMNAS, q)) {
+      const col = COLUMNAS[q]
+
+      if (
+        COLUMNAS_VALIDAS.has(col) &&
+        pillAnswers.has(q)
+      ) {
+        datos[col] = pillAnswers.get(q)
+      }
+    }
   })
 
-  const fechaNac = document.getElementById('fecha-nac').value;
+  const fechaNac = document.getElementById('fecha-nac').value
+
   if (fechaNac) {
-    // Calculamos la edad a partir de la fecha
-    const fn = new Date(fechaNac);
-    const hoy = new Date();
-    let edadCalculada = hoy.getFullYear() - fn.getFullYear();
-    const mes = hoy.getMonth() - fn.getMonth();
-    
-    // Si todavía no cumplió años este año, le restamos 1
-    if (mes < 0 || (mes === 0 && hoy.getDate() < fn.getDate())) {
-      edadCalculada--;
+    const fn = new Date(fechaNac)
+    const hoy = new Date()
+
+    let edadCalculada = hoy.getFullYear() - fn.getFullYear()
+
+    const mes = hoy.getMonth() - fn.getMonth()
+
+    if (
+      mes < 0 ||
+      (mes === 0 && hoy.getDate() < fn.getDate())
+    ) {
+      edadCalculada--
     }
-    
-    datos.edad = edadCalculada; // Guardamos el número en Supabase
+
+    datos.edad = edadCalculada
   }
 
-  if (pillAnswers['genero']) {
-    datos.genero = pillAnswers['genero'];
-  }
-  if (pillAnswers['genero']) {
-    datos.genero = pillAnswers['genero'];
+  if (pillAnswers.has('genero')) {
+    datos.genero = pillAnswers.get('genero')
   }
 
-  datos.comentario = document.getElementById('comentario').value.trim() || null
+  datos.comentario =
+    document.getElementById('comentario').value.trim() || null
+
   return datos
 }
 
@@ -144,8 +173,12 @@ async function enviarFeedback() {
   const datos = leerRespuestas()
 
   try {
-    const { error: sbError } = await db.from('encuestas').insert([datos])
-    if (sbError) throw sbError
+    const { error: sbError } =
+      await db.from('encuestas').insert([datos])
+
+    if (sbError) {
+      throw sbError
+    }
 
     successBox.style.display = 'block'
     successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
@@ -158,27 +191,44 @@ async function enviarFeedback() {
         updateSlider(el)
       })
       // Resetear pills
-      document.querySelectorAll('.rpill').forEach(p => p.classList.remove('active'))
+      document.querySelectorAll('.rpill').forEach(p => {
+        p.classList.remove('active')
+      })
+
       pillAnswers.clear()
 
-      document.getElementById('fecha-nac').value = '';
-      document.getElementById('fecha-error').style.display = 'none';
+      document.getElementById('fecha-nac').value = ''
+
+      const fechaError = document.getElementById('fecha-error')
+      if (fechaError) {
+        fechaError.style.display = 'none'
+      }
+
       document.getElementById('comentario').value = ''
       touched.clear()
       updateProgress()
       successBox.style.display = 'none'
       btn.style.display = 'flex'
       btn.disabled = false
-      btn.innerHTML = '<i class="ti ti-send" style="font-size:16px;"></i> Enviar evaluación completa'
-    }, 3000)
 
+      btn.innerHTML =
+        '<i class="ti ti-send" style="font-size:16px;"></i> Enviar evaluación completa'
+    }, 3000)
   } catch (err) {
     console.error('Error al guardar:', err)
-    alert('Hubo un error al enviar. Verificá tu conexión e intentá de nuevo.')
+
+    alert(
+      'Hubo un error al enviar. Verificá tu conexión e intentá de nuevo.'
+    )
+
     btn.disabled = false
-    btn.innerHTML = '<i class="ti ti-send" style="font-size:16px;"></i> Enviar evaluación completa'
+
+    btn.innerHTML =
+      '<i class="ti ti-send" style="font-size:16px;"></i> Enviar evaluación completa'
   }
 }
 
-window.selectPill = selectPill;
-window.enviarFeedback = enviarFeedback;
+window.selectPill = selectPill
+window.enviarFeedback = enviarFeedback
+window.touched = touched
+window.pillAnswers = pillAnswers
