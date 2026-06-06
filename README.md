@@ -1,0 +1,1 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/c556697cdd7f425ba8f67d91259e52d5)](https://app.codacy.com/gh/HomeroMortola/Trabajo-Nutric/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
