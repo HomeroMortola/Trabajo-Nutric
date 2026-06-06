@@ -1,3 +1,5 @@
+/* global db, Chart */
+/* exported cargarDatos */
 const SECCIONES = [
   {
     label: 'Vista',
@@ -147,7 +149,6 @@ function pctSi(vals) {
 
 function calcularPromediosPorSeccion(data) {
   return SECCIONES.map(s => {
-    // Solo columnas tipo slider para el gráfico de barras/radar
     const sliders = s.columnas.filter(c => c.tipo === 'slider')
     const todos = sliders.flatMap(({ col }) => data.map(e => e[col]))
     return promedio(todos)
@@ -158,9 +159,7 @@ function calcularDetallePorPregunta(data) {
   return SECCIONES.map(s => ({
     ...s,
     resultados: s.columnas.map(c => {
-      if (c.tipo === 'sinon') {
-        return { tipo: 'sinon', pct: pctSi(data.map(e => e[c.col])) }
-      }
+      if (c.tipo === 'sinon') { return { tipo: 'sinon', pct: pctSi(data.map(e => e[c.col])) } }
       return { tipo: 'slider', val: promedio(data.map(e => e[c.col])) }
     })
   }))
@@ -226,37 +225,63 @@ function renderRadar(promedios) {
 
 function renderDetalle(secciones) {
   const contenedor = document.getElementById('detalle-secciones')
-  contenedor.innerHTML = ''
+  contenedor.replaceChildren() // Método seguro y moderno para limpiar el contenedor
+  
   secciones.forEach(s => {
     const div = document.createElement('div')
     div.className = 'tarjeta detalle-seccion'
-    div.innerHTML = `
-      <h2 style="color:${s.color};border-left:3px solid ${s.color};padding-left:8px;">${s.label}</h2>
-      <div class="detalle-lista">
-        ${s.columnas.map((c, i) => {
-          const r = s.resultados[i]
-          if (r.tipo === 'sinon') {
-            const pct = r.pct !== null ? r.pct + '% dijeron Sí' : '—'
-            return `
-              <div class="detalle-fila">
-                <span class="detalle-label">${c.label}</span>
-                <div class="detalle-barra-wrap">
-                  <div class="detalle-barra" style="width:${r.pct ?? 0}%;background:${s.color}22;border-right:2px solid ${s.color}"></div>
-                </div>
-                <span class="detalle-val" style="font-size:0.78rem;min-width:90px;">${pct}</span>
-              </div>`
-          }
-          return `
-            <div class="detalle-fila">
-              <span class="detalle-label">${c.label}</span>
-              <div class="detalle-barra-wrap">
-                <div class="detalle-barra" style="width:${r.val * 10}%;background:${s.color}22;border-right:2px solid ${s.color}"></div>
-              </div>
-              <span class="detalle-val">${r.val}</span>
-            </div>`
-        }).join('')}
-      </div>
-    `
+    
+    const h2 = document.createElement('h2')
+    h2.style.color = s.color
+    h2.style.borderLeft = `3px solid ${s.color}`
+    h2.style.paddingLeft = '8px'
+    h2.textContent = s.label
+    div.appendChild(h2)
+
+    const lista = document.createElement('div')
+    lista.className = 'detalle-lista'
+
+    s.columnas.forEach((c, i) => {
+      /* eslint-disable-next-line security/detect-object-injection */
+      const r = s.resultados[i]
+      
+      const fila = document.createElement('div')
+      fila.className = 'detalle-fila'
+      
+      const lblSpan = document.createElement('span')
+      lblSpan.className = 'detalle-label'
+      lblSpan.textContent = c.label
+      fila.appendChild(lblSpan)
+
+      const wrapBarra = document.createElement('div')
+      wrapBarra.className = 'detalle-barra-wrap'
+      
+      const barra = document.createElement('div')
+      barra.className = 'detalle-barra'
+      barra.style.background = `${s.color}22`
+      barra.style.borderRight = `2px solid ${s.color}`
+      
+      const valSpan = document.createElement('span')
+      valSpan.className = 'detalle-val'
+
+      if (r.tipo === 'sinon') {
+        barra.style.width = `${r.pct ?? 0}%`
+        valSpan.style.fontSize = '0.78rem'
+        valSpan.style.minWidth = '90px'
+        valSpan.textContent = r.pct !== null ? `${r.pct}% dijeron Sí` : '—'
+      } else {
+        barra.style.width = `${r.val * 10}%`
+        valSpan.textContent = r.val
+      }
+
+      wrapBarra.appendChild(barra)
+      fila.appendChild(wrapBarra)
+      fila.appendChild(valSpan)
+      
+      lista.appendChild(fila)
+    })
+    
+    div.appendChild(lista)
     contenedor.appendChild(div)
   })
 }
@@ -267,26 +292,47 @@ function badgeClass(val) {
   return 'high'
 }
 
+// Reescrito para evitar innerHTML y vulnerabilidad XSS
 function renderTabla(data) {
   const tbody = document.querySelector('#tabla-respuestas tbody')
-  tbody.innerHTML = ''
+  tbody.replaceChildren() 
+  
   data.forEach(e => {
-    const fecha = new Date(e.created_at).toLocaleDateString('es-AR')
-    const edadTexto = e.edad ? e.edad : '-';
-    const generoTexto = e.genero ? e.genero : '-';
-    const promediosFila = SECCIONES.map(s => {
-      const sliders = s.columnas.filter(c => c.tipo === 'slider')
-      const vals = sliders.map(({ col }) => e[col]).filter(v => v != null && typeof v === 'number')
-      return vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : '—'
-    })
     const tr = document.createElement('tr')
-    tr.innerHTML = `
-      <td>${fecha}</td>
-      <td>${edadTexto}</td>
-      <td>${generoTexto}</td>
-      ${promediosFila.map(p => `<td><span class="badge badge-${badgeClass(parseFloat(p))}">${p}</span></td>`).join('')}
-      <td class="comentario" title="${e.comentario || ''}">${e.comentario || '—'}</td>
-    `
+    
+    const tdFecha = document.createElement('td')
+    tdFecha.textContent = new Date(e.created_at).toLocaleDateString('es-AR')
+    tr.appendChild(tdFecha)
+    
+    const tdEdad = document.createElement('td')
+    tdEdad.textContent = e.edad ? e.edad : '-'
+    tr.appendChild(tdEdad)
+    
+    const tdGenero = document.createElement('td')
+    tdGenero.textContent = e.genero ? e.genero : '-'
+    tr.appendChild(tdGenero)
+
+    SECCIONES.forEach(s => {
+      const sliders = s.columnas.filter(c => c.tipo === 'slider')
+      /* eslint-disable-next-line security/detect-object-injection */
+      const vals = sliders.map(({ col }) => e[col]).filter(v => v != null && typeof v === 'number')
+      const promedioCol = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : '—'
+      
+      const tdPromo = document.createElement('td')
+      const badge = document.createElement('span')
+      const classNum = parseFloat(promedioCol)
+      badge.className = `badge badge-${isNaN(classNum) ? 'low' : badgeClass(classNum)}`
+      badge.textContent = promedioCol
+      tdPromo.appendChild(badge)
+      tr.appendChild(tdPromo)
+    })
+
+    const tdCom = document.createElement('td')
+    tdCom.className = 'comentario'
+    tdCom.title = e.comentario || ''
+    tdCom.textContent = e.comentario || '—'
+    tr.appendChild(tdCom)
+    
     tbody.appendChild(tr)
   })
 }
@@ -339,22 +385,23 @@ function renderEdad(data) {
 }
 
 function renderGenero(data) {
-  const conteo = {}
+  // Usamos Map para proteger la inyección
+  const conteo = new Map()
   data.forEach(e => {
     const g = e.genero
     if (!g) return
-    conteo[g] = (conteo[g] || 0) + 1
+    conteo.set(g, (conteo.get(g) || 0) + 1)
   })
 
-  const colores = {
-    'Masculino':           '#378add',
-    'Femenino':            '#d4537e',
-    'Prefiero no decirlo': '#ba7517'
-  }
+  const colores = new Map([
+    ['Masculino', '#378add'],
+    ['Femenino', '#d4537e'],
+    ['Prefiero no decirlo', '#ba7517']
+  ])
 
-  const labels = Object.keys(conteo)
-  const valores = labels.map(l => conteo[l])
-  const bgColors = labels.map(l => colores[l] || '#999')
+  const labels = Array.from(conteo.keys())
+  const valores = labels.map(l => conteo.get(l))
+  const bgColors = labels.map(l => colores.get(l) || '#999')
 
   const ctx = document.getElementById('grafico-genero').getContext('2d')
   if (graficoGenero) graficoGenero.destroy()

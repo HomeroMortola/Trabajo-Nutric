@@ -1,4 +1,8 @@
 // Mapa de pregunta número → nombre de columna en Supabase
+
+/* global db */
+/* exported updateSlider, selectPill, enviarFeedback */
+
 const COLUMNAS = {
   1:  'q1_apariencia_general',
   2:  'q2_intensidad_color',
@@ -33,7 +37,7 @@ const TOTAL = 12
 const touched = new Set()
 
 // Respuestas de pills (Sí/No)
-const pillAnswers = {}
+const pillAnswers = new Map()
 
 // Actualiza visual del slider
 function updateSlider(el) {
@@ -155,7 +159,7 @@ async function enviarFeedback() {
       })
       // Resetear pills
       document.querySelectorAll('.rpill').forEach(p => p.classList.remove('active'))
-      Object.keys(pillAnswers).forEach(k => delete pillAnswers[k])
+      pillAnswers.clear()
 
       document.getElementById('fecha-nac').value = '';
       document.getElementById('fecha-error').style.display = 'none';
