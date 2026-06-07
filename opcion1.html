@@ -180,7 +180,7 @@
     </button>
     <div class="success-box" id="success">
       <p>¡Evaluación enviada correctamente! 🌿</p>
-      <span>Gracias por tu tiempo. El equipo de nutrición va a revisar tus respuestas.</span>
+      <span>Redirigiendo a la página de agradecimiento...</span>
     </div>
   </div>
 
@@ -253,6 +253,26 @@ function updateProgress() {
   if (bar) bar.style.width = pct + '%';
   if (label) label.textContent = answered + ' de ' + TOTAL + ' respondidas';
 }
+</script>
+
+<script>
+// Redirección a la página de agradecimiento tras el envío
+(function() {
+  const _originalEnviar = window.enviarFeedback;
+  window.enviarFeedback = async function() {
+    if (typeof _originalEnviar === 'function') {
+      await _originalEnviar();
+    }
+    // Mostrar el box de éxito brevemente y luego redirigir
+    const successBox = document.getElementById('success');
+    if (successBox) {
+      successBox.style.display = 'block';
+    }
+    setTimeout(function() {
+      window.location.href = 'gracias.html';
+    }, 1200);
+  };
+})();
 </script>
 
 <!-- Footer con acceso secreto -->
