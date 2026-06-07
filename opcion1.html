@@ -41,16 +41,16 @@
     <div class="q-block">
       <div class="q-text">
         <span class="q-num" style="background: transparent; color: #27500A; font-size: 16px;"><i class="ti ti-calendar"></i></span>
-        <span>¿Cuál es tu fecha de nacimiento?</span>
+        <span>¿En qué año naciste?</span>
       </div>
       
       <div style="margin-top: 8px;">
-        <input type="date" id="fecha-nac" 
-               style="padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db; font-family: inherit; font-size: 14px; outline: none; background: #fff; color: #1a1a1a; cursor: pointer;" 
+        <select id="fecha-nac" 
+               style="padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db; font-family: inherit; font-size: 14px; outline: none; background: #fff; color: #1a1a1a; cursor: pointer; width: 100%; max-width: 200px;" 
                onchange="validarFechaNac()">
+          <option value="" disabled selected>Seleccioná un año</option>
+        </select>
       </div>
-
-      <div id="fecha-error" style="font-size: 11px; color: #c00000; margin-top: 6px; display: none;">La fecha no puede ser en el futuro.</div>
     </div>
     <div class="divider"></div>
     <div class="q-block">
@@ -206,24 +206,22 @@ if (typeof updateSlider === 'undefined') {
     input.style.background = `linear-gradient(to right, #3B6D11 ${pct}%, #EAF3DE ${pct}%)`;
   }
 }
+const selectAnio = document.getElementById('fecha-nac');
+const anioActual = new Date().getFullYear();
+for (let i = anioActual-1; i >= 1920; i--) {
+  const option = document.createElement('option');
+  option.value = i;
+  option.textContent = i;
+  selectAnio.appendChild(option);
+}
+
+// Nueva validación mucho más simple
 function validarFechaNac() {
   const input = document.getElementById('fecha-nac');
-  const err = document.getElementById('fecha-error');
   
   if (input.value) {
-    const fechaSeleccionada = new Date(input.value);
-    const hoy = new Date();
-    
-    // Verificamos que no haya nacido en el futuro
-    if (fechaSeleccionada > hoy) {
-      err.style.display = 'block';
-      touched.delete('edad');
-    } else {
-      err.style.display = 'none';
-      touched.add('edad');
-    }
+    touched.add('edad');
   } else {
-    err.style.display = 'none';
     touched.delete('edad');
   }
   
@@ -246,8 +244,8 @@ function updateProgress() {
     }
   });
 
-  const fechaVal = document.getElementById('fecha-nac').value;
-  if (fechaVal && new Date(fechaVal) <= new Date()) answered++;
+  const fechaVal = document.getElementById('fecha-nac').value
+  if (fechaVal) answered++
 
   const pct = Math.round((answered / TOTAL) * 100);
   const bar = document.getElementById('progress-bar');

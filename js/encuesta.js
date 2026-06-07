@@ -117,23 +117,11 @@ function leerRespuestas() {
     }
   })
 
-  const fechaNac = document.getElementById('fecha-nac').value
+  const anioNac = document.getElementById('fecha-nac').value
 
-  if (fechaNac) {
-    const fn = new Date(fechaNac)
+  if (anioNac) {
     const hoy = new Date()
-
-    let edadCalculada = hoy.getFullYear() - fn.getFullYear()
-
-    const mes = hoy.getMonth() - fn.getMonth()
-
-    if (
-      mes < 0 ||
-      (mes === 0 && hoy.getDate() < fn.getDate())
-    ) {
-      edadCalculada--
-    }
-
+    const edadCalculada = hoy.getFullYear() - parseInt(anioNac, 10)
     datos.edad = edadCalculada
   }
 
