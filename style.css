@@ -589,3 +589,41 @@ header {
         padding: 0.35rem 0.6rem;
     }
 }
+.thanks-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.check-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #EAF3DE;
+    border: 2px solid #C0DD97;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto 1.5rem;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.check-circle i {
+    font-size: 38px;
+    color: #3B6D11;
+}
+
+@keyframes popIn {
+    from { 
+        transform: scale(0); 
+        opacity: 0; 
+    }
+    to { 
+        transform: scale(1); 
+        opacity: 1; 
+    }
+}
