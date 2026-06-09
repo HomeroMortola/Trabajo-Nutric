@@ -147,12 +147,11 @@ function validar() {
 // Enviar al hacer click en el botón
 async function enviarFeedback() {
   const btn = document.querySelector('.submit-btn')
-  const successBox = document.getElementById('success')
 
   const error = validar()
   if (error) {
     alert(error)
-    return
+    return // Si hay error, detenemos la función aquí y NO redirige
   }
 
   btn.disabled = true
@@ -161,58 +160,18 @@ async function enviarFeedback() {
   const datos = leerRespuestas()
 
   try {
-    const { error: sbError } =
-      await db.from('encuestas').insert([datos])
+    const { error: sbError } = await db.from('encuestas').insert([datos])
+    if (sbError) throw sbError
 
-    if (sbError) {
-      throw sbError
-    }
+    
+    window.location.href = 'gracias.html'
 
-    successBox.style.display = 'block'
-    successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    btn.style.display = 'none'
-
-    setTimeout(() => {
-      // Resetear sliders
-      document.querySelectorAll('input[type=range]').forEach(el => {
-        el.value = 1
-        updateSlider(el)
-      })
-      // Resetear pills
-      document.querySelectorAll('.rpill').forEach(p => {
-        p.classList.remove('active')
-      })
-
-      pillAnswers.clear()
-
-      document.getElementById('fecha-nac').value = ''
-
-      const fechaError = document.getElementById('fecha-error')
-      if (fechaError) {
-        fechaError.style.display = 'none'
-      }
-
-      document.getElementById('comentario').value = ''
-      touched.clear()
-      updateProgress()
-      successBox.style.display = 'none'
-      btn.style.display = 'flex'
-      btn.disabled = false
-
-      btn.innerHTML =
-        '<i class="ti ti-send" style="font-size:16px;"></i> Enviar evaluación completa'
-    }, 3000)
   } catch (err) {
     console.error('Error al guardar:', err)
-
-    alert(
-      'Hubo un error al enviar. Verificá tu conexión e intentá de nuevo.'
-    )
-
+    alert('Hubo un error al enviar. Verificá tu conexión e intentá de nuevo.')
+    
     btn.disabled = false
-
-    btn.innerHTML =
-      '<i class="ti ti-send" style="font-size:16px;"></i> Enviar evaluación completa'
+    btn.innerHTML = '<i class="ti ti-send" style="font-size:16px;"></i> Enviar evaluación completa'
   }
 }
 
