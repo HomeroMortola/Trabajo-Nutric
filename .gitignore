@@ -1,0 +1,26 @@
+# Archivos de entorno (Crucial para proteger contraseñas o claves)
+.env
+.env.local
+.env.*.local
+
+# Archivos generados por Vercel
+.vercel/
+
+# Dependencias (por si instalas herramientas como k6 con npm en el futuro)
+node_modules/
+
+# Archivos del sistema operativo (Mac / Windows)
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Carpetas de editores de código (VS Code, etc.)
+.vscode/
+.idea/
+*.suo
+*.sln
+
+# Logs y archivos de depuración
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
