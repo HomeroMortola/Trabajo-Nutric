@@ -8,6 +8,16 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  
+<nav class="site-navbar">
+  <a href="index.html" class="nav-brand">
+    <i class="ti ti-leaf"></i> Nutrición
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-item active">Inicio</a>
+    <a href="opcion1.html" class="nav-item">Encuesta</a>
+  </div>
+</nav>
 
 <div class="hero">
   <div class="hero-overlay">
@@ -100,6 +110,37 @@
   </div>
 
 </div>
+<!-- Footer con acceso secreto -->
+<footer style="text-align:center;padding:2rem 1rem 3rem;margin-top:1rem;">
+  <span id="footer-trigger" style="font-size:11px;color:#d1d5db;cursor:default;user-select:none;">Formulario Nutricion v1.2.4</span>
+  <div id="secret-box" style="display:none;margin-top:12px;">
+    <input id="secret-input" type="password" placeholder="Clave de acceso"
+      style="padding:7px 12px;border-radius:8px;border:1px solid #d1d5db;font-size:13px;font-family:inherit;outline:none;width:180px;text-align:center;"
+      onkeydown="checkSecret(event)">
+    <div id="secret-error" style="font-size:11px;color:#c00000;margin-top:6px;display:none;">Clave incorrecta</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('footer-trigger').addEventListener('click', function() {
+  const box = document.getElementById('secret-box');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  if (box.style.display === 'block') document.getElementById('secret-input').focus();
+});
+
+function checkSecret(e) {
+  if (e.key !== 'Enter') return;
+  const val = document.getElementById('secret-input').value.trim().toLowerCase();
+  if (val === 'nutriform2026') {
+    window.location.href = 'resultados.html';
+  } else {
+    const err = document.getElementById('secret-error');
+    err.style.display = 'block';
+    document.getElementById('secret-input').value = '';
+    setTimeout(() => { err.style.display = 'none'; }, 2000);
+  }
+}
+</script>
 
 <script>
 function iniciarEncuesta(){

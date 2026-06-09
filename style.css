@@ -481,6 +481,8 @@ header {
     margin:12px auto 0;
 }
 
+
+
 @media (max-width:768px){
 
     .hero{
@@ -506,4 +508,84 @@ header {
         font-size:0.9rem;
     }
 
+}
+/* =========================================
+   BARRA DE NAVEGACIÓN UNIVERSAL
+   ========================================= */
+.site-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.nav-brand {
+    font-weight: 700;
+    color: #3B6D11;
+    text-decoration: none;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.2s;
+}
+
+.nav-brand:hover {
+    transform: scale(1.02);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+}
+
+.nav-item:hover {
+    color: #27500A;
+    background: #EAF3DE;
+}
+
+/* Clase para resaltar la página en la que está el usuario */
+.nav-item.active {
+    color: #3B6D11;
+    background: #EAF3DE;
+    font-weight: 600;
+}
+
+/* Optimización específica para celulares */
+@media (max-width: 480px) {
+    .site-navbar {
+        padding: 0.6rem 1rem;
+    }
+    
+    .nav-brand {
+        font-size: 1.05rem;
+    }
+    
+    .nav-links {
+        gap: 0.3rem; /* Acerca los botones para que entren perfecto en pantallas chicas */
+    }
+    
+    .nav-item {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.6rem;
+    }
 }

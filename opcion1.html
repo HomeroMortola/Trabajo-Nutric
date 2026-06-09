@@ -8,20 +8,22 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  
+<nav class="site-navbar">
+  <a href="index.html" class="nav-brand">
+    <i class="ti ti-leaf"></i> Nutrición
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-item">Inicio</a>
+    <a href="opcion1.html" class="nav-item active">Encuesta</a>
+  </div>
+</nav>
 
 <div class="hero">
-  <img class="hero-img" src="misstartaleta.png" alt="Tartaleta saludable">
   <div class="hero-overlay">
-    <div class="hero-badge">
-      Tartaleta Nutritiva
-    </div>
-    <h1 class="hero-title">
-      Tartaleta Integral Nutritiva
-    </h1>
-    <p class="hero-sub">
-      Análisis sensorial completo basado en apariencia,
-      aroma, textura y sabor del producto alimenticio.
-    </p>
+    <div class="hero-badge"><i class="ti ti-leaf"></i> Química de los Alimentos · 2026</div>
+    <div class="hero-title">Nutrición con propósito</div>
+    <div class="hero-sub">Un trabajo sobre lo que hay detrás de lo que comemos: ciencia, ingredientes y compromiso con la salud.</div>
   </div>
 </div>
 
@@ -55,13 +57,12 @@
     <div class="divider"></div>
     <div class="q-block">
       <div class="q-text">
-        <span class="q-num" style="background: transparent; color: #27500A; font-size: 16px;"><i class="ti ti-gender-intersex"></i></span>
+        <span class="q-num" style="background: transparent; color: #27500A; font-size: 16px;"><i class="ti ti-user"></i></span>
         <span>¿Con qué género te identificás?</span>
       </div>
       <div class="recipe-pills" id="pills-genero">
         <div class="rpill" onclick="selectPill(this, 'genero', 'Masculino')">Masculino</div>
         <div class="rpill" onclick="selectPill(this, 'genero', 'Femenino')">Femenino</div>
-        <div class="rpill" onclick="selectPill(this, 'genero', 'Prefiero no decirlo')">Prefiero no decirlo</div>
       </div>
     </div>
   </div>
