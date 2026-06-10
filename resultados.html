@@ -1,102 +1,102 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resultados — Evaluación Tartaletas</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados — Evaluación Tartaletas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
 
-  <header>
-    <a href="opcion1.html" class="nav-link">← Ir al formulario</a>
-  </header>
+    <header>
+      <a href="opcion1.html" class="nav-link">← Ir al formulario</a>
+    </header>
 
-  <div class="pagina">
-    <div class="encabezado">
-      <h1>Resultados</h1>
-      <p class="subtitulo" id="total">Cargando...</p>
-      <p id="estado"></p>
-    </div>
-    <div class="tarjeta" style="margin-bottom: 1.5rem;">
-      <h2 style="margin-bottom: 12px; font-size: 1.2rem;">Filtros de segmentación</h2>
-      <div style="display: flex; gap: 3rem; flex-wrap: wrap;">
-        
-        <div>
-          <h3 style="font-size: 14px; margin-bottom: 8px; color: #555;">Por Género</h3>
-          <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
-            <label><input type="checkbox" class="filtro-genero" value="Masculino" checked onchange="aplicarFiltros()"> Masculino</label>
-            <label><input type="checkbox" class="filtro-genero" value="Femenino" checked onchange="aplicarFiltros()"> Femenino</label>
-            <label><input type="checkbox" class="filtro-genero" value="Prefiero no decirlo" checked onchange="aplicarFiltros()"> Prefiero no decirlo</label>
+    <div class="pagina">
+      <div class="encabezado">
+        <h1>Resultados</h1>
+        <p class="subtitulo" id="total">Cargando...</p>
+        <p id="estado"></p>
+      </div>
+      <div class="tarjeta" style="margin-bottom: 1.5rem;">
+        <h2 style="margin-bottom: 12px; font-size: 1.2rem;">Filtros de segmentación</h2>
+        <div style="display: flex; gap: 3rem; flex-wrap: wrap;">
+          
+          <div>
+            <h3 style="font-size: 14px; margin-bottom: 8px; color: #555;">Por Género</h3>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+              <label><input type="checkbox" class="filtro-genero" value="Masculino" checked onchange="aplicarFiltros()"> Masculino</label>
+              <label><input type="checkbox" class="filtro-genero" value="Femenino" checked onchange="aplicarFiltros()"> Femenino</label>
+              <label><input type="checkbox" class="filtro-genero" value="Prefiero no decirlo" checked onchange="aplicarFiltros()"> Prefiero no decirlo</label>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <h3 style="font-size: 14px; margin-bottom: 8px; color: #555;">Por Edad</h3>
-          <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
-            <label><input type="checkbox" class="filtro-edad" value="< 20" checked onchange="aplicarFiltros()"> Menos de 20</label>
-            <label><input type="checkbox" class="filtro-edad" value="20–29" checked onchange="aplicarFiltros()"> De 20 a 29</label>
-            <label><input type="checkbox" class="filtro-edad" value="30–39" checked onchange="aplicarFiltros()"> De 30 a 39</label>
-            <label><input type="checkbox" class="filtro-edad" value="40–49" checked onchange="aplicarFiltros()"> De 40 a 49</label>
-            <label><input type="checkbox" class="filtro-edad" value="50–59" checked onchange="aplicarFiltros()"> De 50 a 59</label>
-            <label><input type="checkbox" class="filtro-edad" value="60+" checked onchange="aplicarFiltros()"> 60 o más</label>
+          <div>
+            <h3 style="font-size: 14px; margin-bottom: 8px; color: #555;">Por Edad</h3>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+              <label><input type="checkbox" class="filtro-edad" value="< 20" checked onchange="aplicarFiltros()"> Menos de 20</label>
+              <label><input type="checkbox" class="filtro-edad" value="20–29" checked onchange="aplicarFiltros()"> De 20 a 29</label>
+              <label><input type="checkbox" class="filtro-edad" value="30–39" checked onchange="aplicarFiltros()"> De 30 a 39</label>
+              <label><input type="checkbox" class="filtro-edad" value="40–49" checked onchange="aplicarFiltros()"> De 40 a 49</label>
+              <label><input type="checkbox" class="filtro-edad" value="50–59" checked onchange="aplicarFiltros()"> De 50 a 59</label>
+              <label><input type="checkbox" class="filtro-edad" value="60+" checked onchange="aplicarFiltros()"> 60 o más</label>
+            </div>
           </div>
+
         </div>
+      </div>
 
+      <div class="graficos">
+        <div class="tarjeta">
+          <h2>Promedio por sección</h2>
+          <canvas id="grafico-barras"></canvas>
+        </div>
+        <div class="tarjeta">
+          <h2>Perfil sensorial</h2>
+          <canvas id="grafico-radar"></canvas>
+        </div>
+      </div>
+
+      <div class="graficos">
+        <div class="tarjeta">
+          <h2>Distribución por edad</h2>
+          <canvas id="grafico-edad"></canvas>
+        </div>
+        <div class="tarjeta">
+          <h2>Distribución por género</h2>
+          <canvas id="grafico-genero"></canvas>
+        </div>
+      </div>
+
+      <div id="detalle-secciones"></div>
+
+      <div class="tarjeta-tabla">
+        <h2>Últimas respuestas</h2>
+        <table id="tabla-respuestas">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Edad</th>
+              <th>Género</th>
+              <th>Vista</th>
+              <th>Olfato</th>
+              <th>Tacto</th>
+              <th>Gusto</th>
+              <th>Sabor</th>
+              <th>Comentario</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button class="btn-actualizar" onclick="cargarDatos()">↻ Actualizar</button>
       </div>
     </div>
 
-    <div class="graficos">
-      <div class="tarjeta">
-        <h2>Promedio por sección</h2>
-        <canvas id="grafico-barras"></canvas>
-      </div>
-      <div class="tarjeta">
-        <h2>Perfil sensorial</h2>
-        <canvas id="grafico-radar"></canvas>
-      </div>
-    </div>
-
-    <div class="graficos">
-      <div class="tarjeta">
-        <h2>Distribución por edad</h2>
-        <canvas id="grafico-edad"></canvas>
-      </div>
-      <div class="tarjeta">
-        <h2>Distribución por género</h2>
-        <canvas id="grafico-genero"></canvas>
-      </div>
-    </div>
-
-    <div id="detalle-secciones"></div>
-
-    <div class="tarjeta-tabla">
-      <h2>Últimas respuestas</h2>
-      <table id="tabla-respuestas">
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Edad</th>
-            <th>Género</th>
-            <th>Vista</th>
-            <th>Olfato</th>
-            <th>Tacto</th>
-            <th>Gusto</th>
-            <th>Sabor</th>
-            <th>Comentario</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button class="btn-actualizar" onclick="cargarDatos()">↻ Actualizar</button>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js/supabase.js"></script>
-  <script src="js/resultados.js"></script>
-</body>
-</html>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/resultados.js"></script>
+  </body>
+  </html>
