@@ -396,7 +396,7 @@ function renderGenero(data) {
   const colores = new Map([
     ['Masculino', '#378add'],
     ['Femenino', '#d4537e'],
-    ['Prefiero no decirlo', '#ba7517']
+    ['Otro', '#ba7517']
   ])
 
   const labels = Array.from(conteo.keys())
