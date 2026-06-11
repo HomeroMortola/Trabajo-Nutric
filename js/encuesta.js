@@ -34,6 +34,31 @@ const LABELS = {
   10: 'me gusta extremadamente'
 }
 
+const LABELS_2 = {
+  1:  'muy baja intensidad',
+  2:  'baja intensidad',
+  3:  'baja-moderada',
+  4:  'moderada-baja',
+  5:  'intensidad moderada',
+  6:  'moderada-alta',
+  7:  'alta-moderada',
+  8:  'alta intensidad',
+  9:  'muy alta intensidad',
+  10: 'extremadamente alta'
+}
+const LABELS_3 = {
+  1:  'muy poco tiempo',
+  2:  'poco tiempo',
+  3:  'poco-moderado',
+  4:  'moderado-poco',
+  5:  'tiempo moderado',
+  6:  'moderado-largo',
+  7:  'largo-moderado',
+  8:  'tiempo prolongado',
+  9:  'muy prolongado',
+  10: 'extremadamente largo'
+}
+
 const TOTAL = 12
 const touched = new Set()
 
@@ -54,6 +79,35 @@ function updateSlider(el) {
   touched.add(String(q))
   updateProgress()
 }
+
+function updateSlider_2(el) {
+  const q = el.dataset.q
+  const val = parseInt(el.value, 10)
+  const pct = ((val - 1) / 9) * 100
+
+  el.style.background =
+    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
+
+  document.getElementById('vb-' + q).textContent = val
+  document.getElementById('vd-' + q).textContent = LABELS_2[val]
+  touched.add(String(q))
+  updateProgress()
+}
+
+function updateSlider_3(el) {
+  const q = el.dataset.q
+  const val = parseInt(el.value, 10)
+  const pct = ((val - 1) / 9) * 100
+
+  el.style.background =
+    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
+
+  document.getElementById('vb-' + q).textContent = val
+  document.getElementById('vd-' + q).textContent = LABELS_3[val]
+  touched.add(String(q))
+  updateProgress()
+}
+
 
 // Selección de pill (Sí/No)
 function selectPill(el, q, val) {
