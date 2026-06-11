@@ -59,6 +59,34 @@ const LABELS_3 = {
   10: 'extremadamente largo'
 }
 
+const LABELS_4 = {
+  1:  'extremadamente bajo',
+  2:  'muy bajo',
+  3:  'bajo',
+  4:  'moderadamente bajo',
+  5:  'moderado',
+  6:  'moderadamente alto',
+  7:  'bastante alto',
+  8:  'alto',
+  9:  'muy alto',
+  10: 'extremadamente alto'
+}
+
+const LABELS_5 = {
+  1:  'extremadamente mal',
+  2:  'muy mal',
+  3:  'mal',
+  4:  'moderadamente mal',
+  5:  'moderado',
+  6:  'moderadamente bien',
+  7:  'bastante bien',
+  8:  'bien',
+  9:  'muy bien',
+  10: 'extremadamente bien'
+}
+
+
+
 const TOTAL = 12
 const touched = new Set()
 
@@ -104,6 +132,35 @@ function updateSlider_3(el) {
 
   document.getElementById('vb-' + q).textContent = val
   document.getElementById('vd-' + q).textContent = LABELS_3[val]
+  touched.add(String(q))
+  updateProgress()
+}
+
+function updateSlider_4(el) {
+  const q = el.dataset.q
+  const val = parseInt(el.value, 10)
+  const pct = ((val - 1) / 9) * 100
+
+  el.style.background =
+    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
+
+  document.getElementById('vb-' + q).textContent = val
+  document.getElementById('vd-' + q).textContent = LABELS_4[val]
+  touched.add(String(q))
+  updateProgress()
+}
+
+
+function updateSlider_5(el) {
+  const q = el.dataset.q
+  const val = parseInt(el.value, 10)
+  const pct = ((val - 1) / 9) * 100
+
+  el.style.background =
+    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
+
+  document.getElementById('vb-' + q).textContent = val
+  document.getElementById('vd-' + q).textContent = LABELS_5[val]
   touched.add(String(q))
   updateProgress()
 }
