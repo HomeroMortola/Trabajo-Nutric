@@ -128,7 +128,14 @@ function aplicarFiltros() {
   renderBarras(promediosPorSeccion);
   renderRadar(promediosPorSeccion);
   renderDetalle(seccionesConDetalle);
-  renderTabla(datosFiltrados.slice(0, 20));
+  
+  // Comprobamos la variable global declarada en el HTML
+  if (typeof mostrandoTodos !== 'undefined' && mostrandoTodos) {
+    renderTabla(datosFiltrados); // Muestra absolutamente todas las respuestas
+  } else {
+    renderTabla(datosFiltrados.slice(0, 20)); // Muestra solo las últimas 20
+  }
+  
   renderEdad(datosFiltrados);
   renderGenero(datosFiltrados);
 }
