@@ -1,6 +1,6 @@
 // Mapa de pregunta número → nombre de columna en Supabase
 
-/* global db */
+/* global SurveyRepository */
 /* exported updateSlider, selectPill, enviarFeedback */
 
 const COLUMNAS = {
@@ -271,8 +271,8 @@ async function enviarFeedback() {
   const datos = leerRespuestas()
 
   try {
-    const { error: sbError } = await db.from('encuestas').insert([datos])
-    if (sbError) throw sbError
+    const repository = new SurveyRepository();
+    await repository.saveSurvey(datos);
 
     
     window.location.href = 'gracias.html'

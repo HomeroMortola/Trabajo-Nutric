@@ -1,4 +1,4 @@
-/* global db, Chart */
+/* global SurveyRepository, Chart */
 /* exported cargarDatos */
 const SECCIONES = [
   {
@@ -55,12 +55,11 @@ async function cargarDatos() {
   estado.textContent = 'Cargando resultados...';
   total.textContent  = '';
 
-  const { data, error } = await db
-    .from('encuestas')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
+  let data;
+  try {
+    const repository = new SurveyRepository();
+    data = await repository.getAllSurveys();
+  } catch (error) {
     estado.textContent = 'Error al cargar los datos.';
     console.error(error);
     return;
