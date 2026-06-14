@@ -92,6 +92,14 @@
       </div>
     </div>
 
+    <!-- Navegación rápida -->
+    <div class="tabs-secciones">
+      <a href="#vista-general" class="tab-seccion">Vista general</a>
+      <a href="#distribucion" class="tab-seccion">Distribución de la muestra</a>
+      <a href="#detalle" class="tab-seccion">Detalle por sección</a>
+      <a href="#respuestas" class="tab-seccion">Respuestas</a>
+    </div>
+
     <div id="vista-general" class="graficos">
       <div class="tarjeta">
         <h2><i class="ti ti-chart-bar"></i> Promedio por sección</h2>
@@ -140,9 +148,21 @@
       </div>
 
       <div class="acciones-tabla">
-        <button class="btn-actualizar" onclick="cargarDatos()"><i class="ti ti-refresh"></i> Actualizar</button>
         <button id="btn-ver-todos" class="btn-actualizar" onclick="toggleVerTodos()"><i class="ti ti-list"></i> Ver todas las respuestas y comentarios</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal para comentario completo -->
+  <div id="modal-comentario" class="modal-overlay" onclick="if(event.target===this) cerrarComentario()">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="ti ti-message-circle"></i> Comentario completo</h3>
+        <button class="modal-cerrar" onclick="cerrarComentario()" aria-label="Cerrar">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <p id="modal-comentario-texto"></p>
     </div>
   </div>
 
@@ -193,6 +213,11 @@
       window.addEventListener('scroll', actualizarTabActiva, { passive: true });
       actualizarTabActiva();
     })();
+
+    // Cierra el modal de comentario con la tecla Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') cerrarComentario();
+    });
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

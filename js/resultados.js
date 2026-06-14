@@ -376,12 +376,40 @@ function renderTabla(data) {
 
     const tdCom = document.createElement('td')
     tdCom.className = 'comentario'
-    tdCom.title = e.comentario || ''
-    tdCom.textContent = e.comentario || '—'
+
+    if (e.comentario) {
+      const span = document.createElement('span')
+      span.className = 'comentario-texto'
+      span.title = e.comentario
+      span.textContent = e.comentario
+      tdCom.appendChild(span)
+
+      const btn = document.createElement('button')
+      btn.className = 'btn-ver-comentario'
+      btn.type = 'button'
+      btn.setAttribute('aria-label', 'Ver comentario completo')
+      btn.textContent = '+'
+      btn.addEventListener('click', () => abrirComentario(e.comentario))
+      tdCom.appendChild(btn)
+    } else {
+      tdCom.textContent = '—'
+    }
+
     tr.appendChild(tdCom)
 
     tbody.appendChild(tr)
   })
+}
+
+function abrirComentario(texto) {
+  const modal = document.getElementById('modal-comentario')
+  const contenido = document.getElementById('modal-comentario-texto')
+  contenido.textContent = texto
+  modal.classList.add('abierto')
+}
+
+function cerrarComentario() {
+  document.getElementById('modal-comentario').classList.remove('abierto')
 }
 
 function renderEdad(data) {

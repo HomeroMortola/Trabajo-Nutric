@@ -290,6 +290,109 @@ table{
   margin-top: 0;
 }
 
+/* ── Celda de comentario con botón "+" ── */
+.comentario{
+  white-space: nowrap;
+}
+
+.comentario-texto{
+  display: inline-block;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.btn-ver-comentario{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 6px;
+  border: 1px solid var(--panel-acento);
+  border-radius: 50%;
+  background: var(--panel-acento-suave);
+  color: var(--panel-acento);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  vertical-align: middle;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-ver-comentario:hover{
+  background: var(--panel-acento);
+  color: var(--panel-blanco);
+}
+.btn-ver-comentario:active{
+  transform: scale(0.92);
+}
+
+/* ── Modal de comentario completo ── */
+.modal-overlay{
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 24, 18, 0.45);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+.modal-overlay.abierto{
+  display: flex;
+}
+
+.modal-box{
+  background: var(--panel-blanco);
+  border-radius: var(--panel-radio);
+  max-width: 480px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+}
+
+.modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom: 0.85rem;
+}
+
+.modal-header h3{
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--panel-texto);
+  display:flex;
+  align-items:center;
+  gap: 0.4rem;
+}
+
+.modal-cerrar{
+  border: none;
+  background: none;
+  font-size: 1.1rem;
+  color: var(--panel-texto-suave);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.2rem;
+}
+.modal-cerrar:hover{
+  color: var(--panel-acento);
+}
+
+#modal-comentario-texto{
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--panel-texto);
+  white-space: pre-wrap;
+}
+
 /* ── Móviles ── */
 @media (max-width: 600px){
   .pagina{ padding: 0 0.9rem 3rem; }
@@ -315,6 +418,6 @@ table{
     width: 100%;
   }
 
-  .comentario{ max-width: 120px; }
+  .comentario-texto{ max-width: 90px; }
   .detalle-label{ width: 110px; font-size: 0.72rem; }
 }
