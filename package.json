@@ -2,5 +2,12 @@
   "dependencies": {
     "k6": "^0.0.0",
     "winget": "^0.0.1"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1"
   }
 }

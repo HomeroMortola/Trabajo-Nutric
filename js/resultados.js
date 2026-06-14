@@ -5,17 +5,17 @@ const SECCIONES = [
     label: 'Vista',
     color: '#378add',
     columnas: [
-      { col: 'q1_apariencia_general',      label: 'Apariencia general',        tipo: 'slider' },
-      { col: 'q2_intensidad_color',         label: 'Intensidad del color',       tipo: 'slider' },
-      { col: 'q3_distincion_ingredientes',  label: 'Distinción ingredientes',    tipo: 'sinon'  },
+      { col: 'q1_apariencia_general', label: 'Apariencia general', tipo: 'slider' },
+      { col: 'q2_intensidad_color', label: 'Intensidad del color', tipo: 'slider' },
+      { col: 'q3_distincion_ingredientes', label: 'Distinción ingredientes', tipo: 'sinon' },
     ]
   },
   {
     label: 'Olfato',
     color: '#1d9e75',
     columnas: [
-      { col: 'q4_intensidad_olor',  label: 'Intensidad olor',    tipo: 'slider' },
-      { col: 'q5_olor_verduras',    label: 'Olor a verduras',    tipo: 'sinon'  },
+      { col: 'q4_intensidad_olor', label: 'Intensidad olor', tipo: 'slider' },
+      { col: 'q5_olor_verduras', label: 'Olor a verduras', tipo: 'sinon' },
     ]
   },
   {
@@ -23,7 +23,7 @@ const SECCIONES = [
     color: '#d4537e',
     columnas: [
       { col: 'q6_temperatura', label: 'Temperatura muestra', tipo: 'slider' },
-      { col: 'q7_crocancia',   label: 'Crocancia',           tipo: 'slider' },
+      { col: 'q7_crocancia', label: 'Crocancia', tipo: 'slider' },
     ]
   },
   {
@@ -37,23 +37,23 @@ const SECCIONES = [
     label: 'Sabor',
     color: '#ba7517',
     columnas: [
-      { col: 'q9_sabor_general',      label: 'Sabor general',          tipo: 'slider' },
-      { col: 'q10_permanencia_sabor', label: 'Permanencia del sabor',  tipo: 'slider' },
+      { col: 'q9_sabor_general', label: 'Sabor general', tipo: 'slider' },
+      { col: 'q10_permanencia_sabor', label: 'Permanencia del sabor', tipo: 'slider' },
     ]
   }
 ]
 
-let graficoBarra   = null
-let graficoRadar   = null
-let graficoEdad    = null
-let graficoGenero  = null
+let graficoBarra = null
+let graficoRadar = null
+let graficoEdad = null
+let graficoGenero = null
 let datosGlobales = [];
 
 async function cargarDatos() {
   const estado = document.getElementById('estado');
-  const total  = document.getElementById('total');
+  const total = document.getElementById('total');
   estado.textContent = 'Cargando resultados...';
-  total.textContent  = '';
+  total.textContent = '';
 
   let data;
   try {
@@ -64,22 +64,22 @@ async function cargarDatos() {
     console.error(error);
     return;
   }
-  // Guardamos todo en la variable global
-  datosGlobales = data; 
-  
-  // Llamamos a los filtros (que a su vez dibujan los gráficos)
-  aplicarFiltros(); 
+  //Guarda todo en la variable global
+  datosGlobales = data;
+
+  //Llama a los filtros (que a su vez dibujan los gráficos)
+  aplicarFiltros();
 }
 
 function aplicarFiltros() {
-  // 1. Vemos qué casillas están tildadas
+  //Qué casillas están tildadas
   const generosSeleccionados = Array.from(document.querySelectorAll('.filtro-genero:checked')).map(cb => cb.value);
   const edadesSeleccionadas = Array.from(document.querySelectorAll('.filtro-edad:checked')).map(cb => cb.value);
 
-  // 2. Filtramos la base de datos completa
+  //Filtra la base de datos completa
   const datosFiltrados = datosGlobales.filter(e => {
-    
-    // --- Lógica Género ---
+
+    //Género
     let generoMatch = false;
     if (e.genero && generosSeleccionados.includes(e.genero)) {
       generoMatch = true;
@@ -87,15 +87,15 @@ function aplicarFiltros() {
       generoMatch = true;
     }
 
-    // --- Lógica Edad ---
+    //Edad
     let edadGrupo = null;
     if (e.edad != null && typeof e.edad === 'number') {
-      if (e.edad < 20)      edadGrupo = '< 20';
+      if (e.edad < 20) edadGrupo = '< 20';
       else if (e.edad < 30) edadGrupo = '20–29';
       else if (e.edad < 40) edadGrupo = '30–39';
       else if (e.edad < 50) edadGrupo = '40–49';
       else if (e.edad < 60) edadGrupo = '50–59';
-      else                  edadGrupo = '60+';
+      else edadGrupo = '60+';
     }
 
     let edadMatch = false;
@@ -105,11 +105,11 @@ function aplicarFiltros() {
       edadMatch = true;
     }
 
-    // El registro debe cumplir con AMBOS filtros (Género y Edad)
+    //El registro debe cumplir con AMBOS filtros (Género y Edad)
     return generoMatch && edadMatch;
   });
 
-  // 3. Actualizamos los textos de arriba
+  //Actualiza los textos de arriba
   const estado = document.getElementById('estado');
   const total = document.getElementById('total');
 
@@ -121,7 +121,7 @@ function aplicarFiltros() {
     estado.textContent = '';
   }
 
-  // 4. Mandamos a renderizar todo nuevamente con la info ya recortada
+  //Manda a renderizar todo nuevamente con la info ya recortada
   const promediosPorSeccion = calcularPromediosPorSeccion(datosFiltrados);
   const seccionesConDetalle = calcularDetallePorPregunta(datosFiltrados);
 
@@ -133,7 +133,7 @@ function aplicarFiltros() {
   renderGenero(datosFiltrados);
 }
 
-// Para sliders: promedio numérico. Para Sí/No: ignorar en el promedio de sección (usar solo sliders)
+//Para sliders: promedio numérico. Para Sí/No: ignorar en el promedio de sección (usar solo sliders)
 function promedio(vals) {
   const limpios = vals.filter(v => v != null && typeof v === 'number')
   return limpios.length ? +(limpios.reduce((a, b) => a + b, 0) / limpios.length).toFixed(1) : 0
@@ -225,11 +225,11 @@ function renderRadar(promedios) {
 function renderDetalle(secciones) {
   const contenedor = document.getElementById('detalle-secciones')
   contenedor.replaceChildren() // Método seguro y moderno para limpiar el contenedor
-  
+
   secciones.forEach(s => {
     const div = document.createElement('div')
     div.className = 'tarjeta detalle-seccion'
-    
+
     const h2 = document.createElement('h2')
     h2.style.color = s.color
     h2.style.borderLeft = `3px solid ${s.color}`
@@ -243,10 +243,10 @@ function renderDetalle(secciones) {
     s.columnas.forEach((c, i) => {
       /* eslint-disable-next-line security/detect-object-injection */
       const r = s.resultados[i]
-      
+
       const fila = document.createElement('div')
       fila.className = 'detalle-fila'
-      
+
       const lblSpan = document.createElement('span')
       lblSpan.className = 'detalle-label'
       lblSpan.textContent = c.label
@@ -254,12 +254,12 @@ function renderDetalle(secciones) {
 
       const wrapBarra = document.createElement('div')
       wrapBarra.className = 'detalle-barra-wrap'
-      
+
       const barra = document.createElement('div')
       barra.className = 'detalle-barra'
       barra.style.background = `${s.color}22`
       barra.style.borderRight = `2px solid ${s.color}`
-      
+
       const valSpan = document.createElement('span')
       valSpan.className = 'detalle-val'
 
@@ -276,10 +276,10 @@ function renderDetalle(secciones) {
       wrapBarra.appendChild(barra)
       fila.appendChild(wrapBarra)
       fila.appendChild(valSpan)
-      
+
       lista.appendChild(fila)
     })
-    
+
     div.appendChild(lista)
     contenedor.appendChild(div)
   })
@@ -291,22 +291,22 @@ function badgeClass(val) {
   return 'high'
 }
 
-// Reescrito para evitar innerHTML y vulnerabilidad XSS
+//Reescrito para evitar innerHTML y vulnerabilidad XSS
 function renderTabla(data) {
   const tbody = document.querySelector('#tabla-respuestas tbody')
-  tbody.replaceChildren() 
-  
+  tbody.replaceChildren()
+
   data.forEach(e => {
     const tr = document.createElement('tr')
-    
+
     const tdFecha = document.createElement('td')
     tdFecha.textContent = new Date(e.created_at).toLocaleDateString('es-AR')
     tr.appendChild(tdFecha)
-    
+
     const tdEdad = document.createElement('td')
     tdEdad.textContent = e.edad ? e.edad : '-'
     tr.appendChild(tdEdad)
-    
+
     const tdGenero = document.createElement('td')
     tdGenero.textContent = e.genero ? e.genero : '-'
     tr.appendChild(tdGenero)
@@ -316,7 +316,7 @@ function renderTabla(data) {
       /* eslint-disable-next-line security/detect-object-injection */
       const vals = sliders.map(({ col }) => e[col]).filter(v => v != null && typeof v === 'number')
       const promedioCol = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : '—'
-      
+
       const tdPromo = document.createElement('td')
       const badge = document.createElement('span')
       const classNum = parseFloat(promedioCol)
@@ -331,7 +331,7 @@ function renderTabla(data) {
     tdCom.title = e.comentario || ''
     tdCom.textContent = e.comentario || '—'
     tr.appendChild(tdCom)
-    
+
     tbody.appendChild(tr)
   })
 }
@@ -344,12 +344,12 @@ function renderEdad(data) {
   data.forEach(e => {
     const edad = e.edad
     if (edad == null || typeof edad !== 'number') return
-    if (edad < 20)       grupos['< 20']++
-    else if (edad < 30)  grupos['20–29']++
-    else if (edad < 40)  grupos['30–39']++
-    else if (edad < 50)  grupos['40–49']++
-    else if (edad < 60)  grupos['50–59']++
-    else                 grupos['60+']++
+    if (edad < 20) grupos['< 20']++
+    else if (edad < 30) grupos['20–29']++
+    else if (edad < 40) grupos['30–39']++
+    else if (edad < 50) grupos['40–49']++
+    else if (edad < 60) grupos['50–59']++
+    else grupos['60+']++
   })
 
   const ctx = document.getElementById('grafico-edad').getContext('2d')
@@ -384,7 +384,7 @@ function renderEdad(data) {
 }
 
 function renderGenero(data) {
-  // Usamos Map para proteger la inyección
+  //Usa Map para proteger la inyección
   const conteo = new Map()
   data.forEach(e => {
     const g = e.genero
@@ -428,3 +428,8 @@ function renderGenero(data) {
 }
 
 cargarDatos()
+
+//Exportación segura para Node.js (Jest) sin romper el navegador
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { promedio, pctSi, badgeClass };
+}

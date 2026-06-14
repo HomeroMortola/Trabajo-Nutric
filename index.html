@@ -1,48 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nutrición con propósito</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutrición con propósito</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  
-<nav class="site-navbar">
-  <a href="index.html" class="nav-brand">
-    <i class="ti ti-leaf"></i> Misstartaletas
-  </a>
-  <div class="nav-links">
-    <a href="index.html" class="nav-item active">Inicio</a>
-    <a href="opcion1.html" class="nav-item">Encuesta</a>
-  </div>
-</nav>
 
-<div class="hero">
-  <div class="hero-overlay">
-    <div class="hero-badge"><i class="ti ti-leaf"></i> Química de los Alimentos · 2026</div>
-    <h1 class="hero-title">Nutrición con propósito</h1>
-    <div class="hero-sub">Un trabajo sobre lo que hay detrás de lo que comemos: ciencia, ingredientes y compromiso con la salud.</div>
-  </div>
-</div>
-
-<div class="content">
-
-  <div class="card" style="margin-top:1rem;">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;">
-      <div class="section-icon"><i class="ti ti-users"></i></div>
-      <div class="section-title-text" style="font-size:15px;">¿Quiénes somos?</div>
+  <nav class="site-navbar">
+    <a href="index.html" class="nav-brand">
+      <i class="ti ti-leaf"></i> Misstartaletas
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-item active">Inicio</a>
+      <a href="opcion1.html" class="nav-item">Encuesta</a>
     </div>
-    <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;margin-bottom:0.6rem;">
-      Somos un grupo de estudiantes de <strong>2° año de la Licenciatura en Nutrición</strong> cursando la materia <strong>Química de los Alimentos</strong>.
-    </p>
-    <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;margin-bottom:0.6rem;">
-      Nos interesa entender qué hay detrás de lo que comemos: cómo los ingredientes interactúan, qué los hace nutritivos y cómo lograr que un alimento sea saludable y rico a la vez.
-    </p>
-    <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;">
-      Este trabajo representa nuestro compromiso con una nutrición que sea <strong>sustentable</strong>, basada en evidencia y pensada para las personas.
-    </p>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-overlay">
+      <div class="hero-badge"><i class="ti ti-leaf"></i> Química de los Alimentos · 2026</div>
+      <h1 class="hero-title">Nutrición con propósito</h1>
+      <div class="hero-sub">Un trabajo sobre lo que hay detrás de lo que comemos: ciencia, ingredientes y compromiso con
+        la salud.</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="card" style="margin-top:1rem;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;">
+        <div class="section-icon"><i class="ti ti-users"></i></div>
+        <div class="section-title-text" style="font-size:15px;">¿Quiénes somos?</div>
+      </div>
+      <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;margin-bottom:0.6rem;">
+        Somos un grupo de estudiantes de <strong>2° año de la Licenciatura en Nutrición</strong> cursando la materia
+        <strong>Química de los Alimentos</strong>.
+      </p>
+      <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;margin-bottom:0.6rem;">
+        Nos interesa entender qué hay detrás de lo que comemos: cómo los ingredientes interactúan, qué los hace
+        nutritivos y cómo lograr que un alimento sea saludable y rico a la vez.
+      </p>
+      <p style="font-size:13.5px;color:#3d3d3d;line-height:1.7;">
+        Este trabajo representa nuestro compromiso con una nutrición que sea <strong>sustentable</strong>, basada en
+        evidencia y pensada para las personas.
+      </p>
 
       <div style="text-align:center;margin-top:1.5rem;">
         <button id="encuesta-btn" onclick="iniciarEncuesta()">
@@ -51,112 +57,115 @@
           <i class="ti ti-arrow-right" id="arrow-icon"></i>
         </button>
         <div id="msg" style="display:none;margin-top:14px;">
-          <div style="display:inline-flex;align-items:center;gap:8px;background:#EAF3DE;border:0.5px solid #C0DD97;border-radius:999px;padding:8px 20px;font-size:13px;color:#27500A;">
+          <div
+            style="display:inline-flex;align-items:center;gap:8px;background:#EAF3DE;border:0.5px solid #C0DD97;border-radius:999px;padding:8px 20px;font-size:13px;color:#27500A;">
             <span class="spinner"></span>
             Dirigiendo a la encuesta...
           </div>
         </div>
       </div>
-    <div class="divider"></div>
+      <div class="divider"></div>
 
       <div style="font-size:12px;color:#6b7280;margin-bottom:12px;">
-      Equipo de trabajo
+        Equipo de trabajo
       </div>
 
-    <div class="member-grid">
+      <div class="member-grid">
 
-      <div class="member-card">
-        <div class="avatar">AL</div>
-        <div>
-          <div class="member-name">Faustina Zambiasio</div>
-          <div class="member-role">Investigación</div>
+        <div class="member-card">
+          <div class="avatar">AL</div>
+          <div>
+            <div class="member-name">Faustina Zambiasio</div>
+            <div class="member-role">Investigación</div>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="avatar">AL</div>
+          <div>
+            <div class="member-name">Camila Barchiese</div>
+            <div class="member-role">Investigación</div>
+          </div>
+        </div>
+
+
+        <div class="member-card">
+          <div class="avatar">MG</div>
+          <div>
+            <div class="member-name">Nadine Rochat</div>
+            <div class="member-role">Redacción</div>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="avatar">LR</div>
+          <div>
+            <div class="member-name">Milena Diaz</div>
+            <div class="member-role">Análisis</div>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="avatar">SF</div>
+          <div>
+            <div class="member-name">Martina Bernal</div>
+            <div class="member-role">Diseño</div>
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="member-card">
-        <div class="avatar">AL</div>
-        <div>
-          <div class="member-name">Camila Barchiese</div>
-          <div class="member-role">Investigación</div>
-        </div>
+    <!-- Footer con acceso secreto -->
+    <footer style="text-align:center;padding:2rem 1rem 3rem;margin-top:1rem;">
+      <span id="footer-trigger" style="font-size:11px;color:#d1d5db;cursor:default;user-select:none;">Formulario
+        Nutricion v1.2.4</span>
+      <div id="secret-box" style="display:none;margin-top:12px;">
+        <input id="secret-input" type="password" placeholder="Clave de acceso"
+          style="padding:7px 12px;border-radius:8px;border:1px solid #d1d5db;font-size:13px;font-family:inherit;outline:none;width:180px;text-align:center;"
+          onkeydown="checkSecret(event)">
+        <div id="secret-error" style="font-size:11px;color:#c00000;margin-top:6px;display:none;">Clave incorrecta</div>
       </div>
+    </footer>
 
+    <script>
+      document.getElementById('footer-trigger').addEventListener('click', function () {
+        const box = document.getElementById('secret-box');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+        if (box.style.display === 'block') document.getElementById('secret-input').focus();
+      });
 
-      <div class="member-card">
-        <div class="avatar">MG</div>
-        <div>
-          <div class="member-name">Nadine Rochat</div>
-          <div class="member-role">Redacción</div>
-        </div>
-      </div>
+      function checkSecret(e) {
+        if (e.key !== 'Enter') return;
+        const val = document.getElementById('secret-input').value.trim().toLowerCase();
+        if (val === 'nutriform2026') {
+          window.location.href = 'resultados.html';
+        } else {
+          const err = document.getElementById('secret-error');
+          err.style.display = 'block';
+          document.getElementById('secret-input').value = '';
+          setTimeout(() => { err.style.display = 'none'; }, 2000);
+        }
+      }
+    </script>
 
-      <div class="member-card">
-        <div class="avatar">LR</div>
-        <div>
-          <div class="member-name">Milena Diaz</div>
-          <div class="member-role">Análisis</div>
-        </div>
-      </div>
+    <script>
+      function iniciarEncuesta() {
+        const btn = document.getElementById('encuesta-btn');
+        const msg = document.getElementById('msg');
+        const txt = document.getElementById('btn-text');
 
-      <div class="member-card">
-        <div class="avatar">SF</div>
-        <div>
-          <div class="member-name">Martina Bernal</div>
-          <div class="member-role">Diseño</div>
-        </div>
-      </div>
-</div>
-</div>
+        btn.disabled = true;
+        btn.classList.add('pulsing');
+        txt.textContent = 'Un momento...';
 
-<!-- Footer con acceso secreto -->
-<footer style="text-align:center;padding:2rem 1rem 3rem;margin-top:1rem;">
-  <span id="footer-trigger" style="font-size:11px;color:#d1d5db;cursor:default;user-select:none;">Formulario Nutricion v1.2.4</span>
-  <div id="secret-box" style="display:none;margin-top:12px;">
-    <input id="secret-input" type="password" placeholder="Clave de acceso"
-      style="padding:7px 12px;border-radius:8px;border:1px solid #d1d5db;font-size:13px;font-family:inherit;outline:none;width:180px;text-align:center;"
-      onkeydown="checkSecret(event)">
-    <div id="secret-error" style="font-size:11px;color:#c00000;margin-top:6px;display:none;">Clave incorrecta</div>
-  </div>
-</footer>
+        msg.style.display = 'block';
 
-<script>
-document.getElementById('footer-trigger').addEventListener('click', function() {
-  const box = document.getElementById('secret-box');
-  box.style.display = box.style.display === 'none' ? 'block' : 'none';
-  if (box.style.display === 'block') document.getElementById('secret-input').focus();
-});
-
-function checkSecret(e) {
-  if (e.key !== 'Enter') return;
-  const val = document.getElementById('secret-input').value.trim().toLowerCase();
-  if (val === 'nutriform2026') {
-    window.location.href = 'resultados.html';
-  } else {
-    const err = document.getElementById('secret-error');
-    err.style.display = 'block';
-    document.getElementById('secret-input').value = '';
-    setTimeout(() => { err.style.display = 'none'; }, 2000);
-  }
-}
-</script>
-
-<script>
-function iniciarEncuesta(){
-  const btn = document.getElementById('encuesta-btn');
-  const msg = document.getElementById('msg');
-  const txt = document.getElementById('btn-text');
-
-  btn.disabled = true;
-  btn.classList.add('pulsing');
-  txt.textContent = 'Un momento...';
-
-  msg.style.display = 'block';
-
-  setTimeout(() => {
-    window.location.href = 'opcion1.html';
-  }, 2000);
-}
-</script>
+        setTimeout(() => {
+          window.location.href = 'opcion1.html';
+        }, 2000);
+      }
+    </script>
 
 </body>
+
 </html>
