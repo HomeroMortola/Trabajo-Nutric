@@ -1,0 +1,320 @@
+/* =========================================================
+   RESULTADOS — hoja de estilos del panel de análisis
+   Se carga después de style.css y reutiliza sus tokens
+   (colores, fuentes, navbar) agregando una capa de
+   "dashboard" más densa y orientada a datos.
+   ========================================================= */
+
+:root{
+  --panel-bg: #f4f6f4;
+  --panel-borde: #e2e6e1;
+  --panel-texto: #1a1f17;
+  --panel-texto-suave: #6b756a;
+  --panel-blanco: #ffffff;
+  --panel-acento: #3B6D11;
+  --panel-acento-suave: #EAF3DE;
+  --panel-radio: 14px;
+}
+
+body{
+  background: var(--panel-bg);
+}
+
+/* ── Layout general ── */
+.pagina{
+  max-width: 1180px;
+  padding: 0 1.25rem 4rem;
+}
+
+.encabezado{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap: 1rem;
+  margin: 1.5rem 0 1.75rem;
+}
+
+.encabezado h1{
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+}
+
+.encabezado-meta{
+  text-align: right;
+}
+
+#estado{
+  font-size: 0.8rem;
+}
+
+/* ── Tira de indicadores (KPIs) ── */
+.kpi-strip{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi{
+  background: var(--panel-blanco);
+  border: 1px solid var(--panel-borde);
+  border-radius: var(--panel-radio);
+  padding: 1.1rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi::before{
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:4px; height:100%;
+  background: var(--kpi-color, var(--panel-acento));
+}
+
+.kpi-label{
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--panel-texto-suave);
+  margin-bottom: 0.4rem;
+}
+
+.kpi-valor{
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-sub{
+  font-size: 0.75rem;
+  color: var(--panel-texto-suave);
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 900px){
+  .kpi-strip{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 460px){
+  .kpi-strip{ grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .kpi{ padding: 0.85rem 0.9rem; }
+  .kpi-valor{ font-size: 1.5rem; }
+}
+
+/* ── Panel de filtros ── */
+.panel-filtros{
+  background: var(--panel-blanco);
+  border: 1px solid var(--panel-borde);
+  border-radius: var(--panel-radio);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.panel-filtros-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 0.9rem 1.25rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.panel-filtros-header h2{
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--panel-texto-suave);
+  display:flex;
+  align-items:center;
+  gap: 0.5rem;
+}
+
+.panel-filtros-header .ti-chevron-down{
+  transition: transform 0.25s ease;
+  color: var(--panel-texto-suave);
+}
+
+.panel-filtros.abierto .ti-chevron-down{
+  transform: rotate(180deg);
+}
+
+.panel-filtros-body{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.75rem;
+  padding: 0 1.25rem 1.1rem;
+}
+
+.panel-filtros:not(.abierto) .panel-filtros-body{
+  display:none;
+}
+
+.grupo-filtro h3{
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+  color: var(--panel-texto-suave);
+}
+
+.opciones-filtro{
+  display:flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.chip-filtro{
+  display:flex;
+  align-items:center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--panel-texto);
+  cursor: pointer;
+}
+
+.chip-filtro input{
+  accent-color: var(--panel-acento);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* En desktop, el panel queda siempre abierto y sin "acordeón" */
+@media (min-width: 769px){
+  .panel-filtros-header{ cursor: default; }
+  .panel-filtros-header .ti-chevron-down{ display: none; }
+  .panel-filtros-body{ display:grid !important; }
+}
+
+/* ── Navegación de secciones (tabs ancla) ── */
+.tabs-secciones{
+  display:flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 0.25rem;
+  margin-bottom: 1.25rem;
+}
+.tabs-secciones::-webkit-scrollbar{ display:none; }
+
+.tab-seccion{
+  flex-shrink:0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--panel-texto-suave);
+  background: var(--panel-blanco);
+  border: 1px solid var(--panel-borde);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.tab-seccion:hover,
+.tab-seccion.activo{
+  color: var(--panel-acento);
+  border-color: var(--panel-acento);
+  background: var(--panel-acento-suave);
+}
+
+/* ── Tarjetas / gráficos ── */
+.tarjeta h2,
+.tarjeta-tabla h2{
+  display:flex;
+  align-items:center;
+  gap: 0.5rem;
+}
+
+.tarjeta canvas{
+  max-height: 280px;
+}
+
+#grafico-radar{
+  max-height: 300px;
+}
+
+.graficos{
+  scroll-margin-top: 1rem;
+}
+
+/* ── Detalle por sección ── */
+.detalle-seccion{
+  scroll-margin-top: 1rem;
+}
+
+/* ── Tabla responsive: scroll horizontal con sombra de borde ── */
+.tarjeta-tabla{
+  scroll-margin-top: 1rem;
+}
+
+.tabla-scroll{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -0.25rem;
+  padding: 0 0.25rem;
+}
+
+table{
+  font-variant-numeric: tabular-nums;
+}
+
+.badge{
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tabla colapsada: oculta filas extra y atenúa comentarios largos */
+#tabla-respuestas tbody tr:nth-child(n+9){
+  display: none;
+}
+.tarjeta-tabla.mostrar-todos #tabla-respuestas tbody tr:nth-child(n+9){
+  display: table-row;
+}
+
+/* ── Botones de acción ── */
+.acciones-tabla{
+  display:flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.1rem;
+}
+
+.btn-actualizar{
+  display:inline-flex;
+  align-items:center;
+  gap: 0.4rem;
+  margin-top: 0;
+}
+
+/* ── Móviles ── */
+@media (max-width: 600px){
+  .pagina{ padding: 0 0.9rem 3rem; }
+  .encabezado{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  .encabezado-meta{ text-align: left; }
+
+  .tarjeta, .tarjeta-tabla, .panel-filtros{
+    border-radius: 12px;
+    padding: 1.1rem;
+  }
+  .panel-filtros-body{ padding: 0 1.1rem 1rem; }
+  .panel-filtros-header{ padding: 0.85rem 1.1rem; }
+
+  .acciones-tabla{
+    flex-direction: column;
+  }
+  .acciones-tabla .btn-actualizar{
+    justify-content: center;
+    width: 100%;
+  }
+
+  .comentario{ max-width: 120px; }
+  .detalle-label{ width: 110px; font-size: 0.72rem; }
+}

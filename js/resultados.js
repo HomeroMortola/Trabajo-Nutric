@@ -125,6 +125,7 @@ function aplicarFiltros() {
   const promediosPorSeccion = calcularPromediosPorSeccion(datosFiltrados);
   const seccionesConDetalle = calcularDetallePorPregunta(datosFiltrados);
 
+  renderKPIs(datosFiltrados, promediosPorSeccion);
   renderBarras(promediosPorSeccion);
   renderRadar(promediosPorSeccion);
   renderDetalle(seccionesConDetalle);
@@ -169,6 +170,46 @@ function calcularDetallePorPregunta(data) {
       return { tipo: 'slider', val: promedio(data.map(e => e[c.col])) }
     })
   }))
+}
+
+function renderKPIs(data, promedios) {
+  const total = data.length;
+
+  const elTotal = document.getElementById('kpi-total');
+  const elTotalSub = document.getElementById('kpi-total-sub');
+  const elPromedio = document.getElementById('kpi-promedio');
+  const elMejor = document.getElementById('kpi-mejor');
+  const elMejorSub = document.getElementById('kpi-mejor-sub');
+  const elPeor = document.getElementById('kpi-peor');
+  const elPeorSub = document.getElementById('kpi-peor-sub');
+
+  elTotal.textContent = total;
+  elTotalSub.textContent = total === 1 ? 'respuesta filtrada' : 'respuestas filtradas';
+
+  if (total === 0) {
+    elPromedio.textContent = '—';
+    elMejor.textContent = '—';
+    elPeor.textContent = '—';
+    elMejorSub.innerHTML = '&nbsp;';
+    elPeorSub.innerHTML = '&nbsp;';
+    return;
+  }
+
+  const promedioGeneral = +(promedios.reduce((a, b) => a + b, 0) / promedios.length).toFixed(1);
+  elPromedio.textContent = promedioGeneral;
+
+  let idxMejor = 0;
+  let idxPeor = 0;
+  promedios.forEach((p, i) => {
+    if (p > promedios[idxMejor]) idxMejor = i;
+    if (p < promedios[idxPeor]) idxPeor = i;
+  });
+
+  elMejor.textContent = SECCIONES[idxMejor].label;
+  elMejorSub.textContent = `promedio ${promedios[idxMejor]}`;
+
+  elPeor.textContent = SECCIONES[idxPeor].label;
+  elPeorSub.textContent = `promedio ${promedios[idxPeor]}`;
 }
 
 function renderBarras(promedios) {
