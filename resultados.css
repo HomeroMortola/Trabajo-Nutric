@@ -166,6 +166,12 @@ body{
   gap: 0.45rem;
 }
 
+.opciones-filtro.dos-columnas{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem 1rem;
+}
+
 .chip-filtro{
   display:flex;
   align-items:center;
@@ -250,6 +256,13 @@ body{
 /* ── Tabla responsive: scroll horizontal con sombra de borde ── */
 .tarjeta-tabla{
   scroll-margin-top: 1rem;
+}
+
+#respuestas{
+  display: block;
+  position: relative;
+  top: -1rem;
+  visibility: hidden;
 }
 
 .tabla-scroll{
