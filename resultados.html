@@ -1,79 +1,128 @@
-  <!DOCTYPE html>
-  <html lang="es">
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resultados — Evaluación Tartaletas</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados — Evaluación Tartaletas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="resultados.css">
+</head>
+<body>
 
-    <header>
-      <a href="opcion1.html" class="nav-link">← Ir al formulario</a>
-    </header>
+  <nav class="site-navbar">
+    <a href="index.html" class="nav-brand">
+      <i class="ti ti-leaf"></i> Misstartaletas
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-item">Inicio</a>
+      <a href="opcion1.html" class="nav-item">Encuesta</a>
+      <a href="resultados.html" class="nav-item active">Resultados</a>
+    </div>
+  </nav>
 
-    <div class="pagina">
-      <div class="encabezado">
-        <h1>Resultados</h1>
+  <div class="pagina">
+
+    <div class="encabezado">
+      <div>
+        <h1>Panel de resultados</h1>
+        <p class="subtitulo">Evaluación sensorial — Tartaletas integrales</p>
+      </div>
+      <div class="encabezado-meta">
         <p class="subtitulo" id="total">Cargando...</p>
         <p id="estado"></p>
       </div>
-      <div class="tarjeta" style="margin-bottom: 1.5rem;">
-        <h2 style="margin-bottom: 12px; font-size: 1.2rem;">Filtros de segmentación</h2>
-        <div style="display: flex; gap: 3rem; flex-wrap: wrap;">
-          
-          <div>
-            <h3 style="font-size: 14px; margin-bottom: 8px; color: #555;">Por Género</h3>
-            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
-              <label><input type="checkbox" class="filtro-genero" value="Masculino" checked onchange="aplicarFiltros()"> Masculino</label>
-              <label><input type="checkbox" class="filtro-genero" value="Femenino" checked onchange="aplicarFiltros()"> Femenino</label>
-              <label><input type="checkbox" class="filtro-genero" value="Otro" checked onchange="aplicarFiltros()"> Otro</label>
-            </div>
+    </div>
+
+    <!-- Indicadores clave -->
+    <div class="kpi-strip" id="kpi-strip">
+      <div class="kpi" style="--kpi-color:#3B6D11;">
+        <div class="kpi-label">Respuestas totales</div>
+        <div class="kpi-valor" id="kpi-total">—</div>
+        <div class="kpi-sub" id="kpi-total-sub">según filtros aplicados</div>
+      </div>
+      <div class="kpi" style="--kpi-color:#e85d26;">
+        <div class="kpi-label">Promedio general</div>
+        <div class="kpi-valor" id="kpi-promedio">—</div>
+        <div class="kpi-sub">escala de 1 a 10</div>
+      </div>
+      <div class="kpi" style="--kpi-color:#1d9e75;">
+        <div class="kpi-label">Mejor sección</div>
+        <div class="kpi-valor" id="kpi-mejor">—</div>
+        <div class="kpi-sub" id="kpi-mejor-sub">&nbsp;</div>
+      </div>
+      <div class="kpi" style="--kpi-color:#d4537e;">
+        <div class="kpi-label">Sección a mejorar</div>
+        <div class="kpi-valor" id="kpi-peor">—</div>
+        <div class="kpi-sub" id="kpi-peor-sub">&nbsp;</div>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="panel-filtros" id="panel-filtros">
+      <div class="panel-filtros-header" id="panel-filtros-toggle">
+        <h2><i class="ti ti-filter"></i> Filtros de segmentación</h2>
+        <i class="ti ti-chevron-down"></i>
+      </div>
+      <div class="panel-filtros-body">
+
+        <div class="grupo-filtro">
+          <h3>Género</h3>
+          <div class="opciones-filtro">
+            <label class="chip-filtro"><input type="checkbox" class="filtro-genero" value="Masculino" checked onchange="aplicarFiltros()"> Masculino</label>
+            <label class="chip-filtro"><input type="checkbox" class="filtro-genero" value="Femenino" checked onchange="aplicarFiltros()"> Femenino</label>
+            <label class="chip-filtro"><input type="checkbox" class="filtro-genero" value="Otro" checked onchange="aplicarFiltros()"> Otro</label>
           </div>
+        </div>
 
-          <div>
-            <h3 style="font-size: 14px; margin-bottom: 8px; color: #555;">Por Edad</h3>
-            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
-              <label><input type="checkbox" class="filtro-edad" value="< 20" checked onchange="aplicarFiltros()"> Menos de 20</label>
-              <label><input type="checkbox" class="filtro-edad" value="20–29" checked onchange="aplicarFiltros()"> De 20 a 29</label>
-              <label><input type="checkbox" class="filtro-edad" value="30–39" checked onchange="aplicarFiltros()"> De 30 a 39</label>
-              <label><input type="checkbox" class="filtro-edad" value="40–49" checked onchange="aplicarFiltros()"> De 40 a 49</label>
-              <label><input type="checkbox" class="filtro-edad" value="50–59" checked onchange="aplicarFiltros()"> De 50 a 59</label>
-              <label><input type="checkbox" class="filtro-edad" value="60+" checked onchange="aplicarFiltros()"> 60 o más</label>
-            </div>
+        <div class="grupo-filtro">
+          <h3>Edad</h3>
+          <div class="opciones-filtro dos-columnas">
+            <label class="chip-filtro"><input type="checkbox" class="filtro-edad" value="< 20" checked onchange="aplicarFiltros()"> Menos de 20</label>
+            <label class="chip-filtro"><input type="checkbox" class="filtro-edad" value="20–29" checked onchange="aplicarFiltros()"> De 20 a 29</label>
+            <label class="chip-filtro"><input type="checkbox" class="filtro-edad" value="30–39" checked onchange="aplicarFiltros()"> De 30 a 39</label>
+            <label class="chip-filtro"><input type="checkbox" class="filtro-edad" value="40–49" checked onchange="aplicarFiltros()"> De 40 a 49</label>
+            <label class="chip-filtro"><input type="checkbox" class="filtro-edad" value="50–59" checked onchange="aplicarFiltros()"> De 50 a 59</label>
+            <label class="chip-filtro"><input type="checkbox" class="filtro-edad" value="60+" checked onchange="aplicarFiltros()"> 60 o más</label>
           </div>
-
         </div>
+
       </div>
+    </div>
 
-      <div class="graficos">
-        <div class="tarjeta">
-          <h2>Promedio por sección</h2>
-          <canvas id="grafico-barras"></canvas>
-        </div>
-        <div class="tarjeta">
-          <h2>Perfil sensorial</h2>
-          <canvas id="grafico-radar"></canvas>
-        </div>
+
+    <div id="vista-general" class="graficos">
+      <div class="tarjeta">
+        <h2><i class="ti ti-chart-bar"></i> Promedio por sección</h2>
+        <canvas id="grafico-barras"></canvas>
       </div>
-
-      <div class="graficos">
-        <div class="tarjeta">
-          <h2>Distribución por edad</h2>
-          <canvas id="grafico-edad"></canvas>
-        </div>
-        <div class="tarjeta">
-          <h2>Distribución por género</h2>
-          <canvas id="grafico-genero"></canvas>
-        </div>
+      <div class="tarjeta">
+        <h2><i class="ti ti-chart-radar"></i> Perfil sensorial</h2>
+        <canvas id="grafico-radar"></canvas>
       </div>
+    </div>
 
+    <div id="distribucion" class="graficos">
+      <div class="tarjeta">
+        <h2><i class="ti ti-users"></i> Distribución por edad</h2>
+        <canvas id="grafico-edad"></canvas>
+      </div>
+      <div class="tarjeta">
+        <h2><i class="ti ti-gender-bigender"></i> Distribución por género</h2>
+        <canvas id="grafico-genero"></canvas>
+      </div>
+    </div>
+
+    <div id="detalle" class="detalle-secciones">
       <div id="detalle-secciones"></div>
+    </div>
 
-      <div class="tarjeta-tabla">
-        <h2>Últimas respuestas</h2>
+    <div id="contenedor-tabla" class="tarjeta-tabla">
+      <a id="respuestas"></a>
+      <h2 id="titulo-tabla"><i class="ti ti-table"></i> Últimas respuestas</h2>
+      <div class="tabla-scroll">
         <table id="tabla-respuestas">
           <thead>
             <tr>
@@ -90,14 +139,85 @@
           </thead>
           <tbody></tbody>
         </table>
-        <button class="btn-actualizar" onclick="cargarDatos()">↻ Actualizar</button>
+      </div>
+
+      <div class="acciones-tabla">
+        <button id="btn-ver-todos" class="btn-actualizar" onclick="toggleVerTodos()"><i class="ti ti-list"></i> Ver todas las respuestas y comentarios</button>
       </div>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/supabase.js"></script>
-    <script src="js/repository.js"></script>
-    <script src="js/resultados.js"></script>
-  </body>
-  </html>
+  <!-- Modal para comentario completo -->
+  <div id="modal-comentario" class="modal-overlay" onclick="if(event.target===this) cerrarComentario()">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="ti ti-message-circle"></i> Comentario completo</h3>
+        <button class="modal-cerrar" onclick="cerrarComentario()" aria-label="Cerrar">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <p id="modal-comentario-texto"></p>
+    </div>
+  </div>
+
+  <script>
+    let mostrandoTodos = false;
+
+    function toggleVerTodos() {
+      mostrandoTodos = !mostrandoTodos;
+      const contenedorTabla = document.getElementById('contenedor-tabla');
+      const btnVerTodos = document.getElementById('btn-ver-todos');
+      const tituloTabla = document.getElementById('titulo-tabla');
+
+      if (mostrandoTodos) {
+        contenedorTabla.classList.add('mostrar-todos');
+        btnVerTodos.innerHTML = '<i class="ti ti-list"></i> Contraer tabla';
+        tituloTabla.innerHTML = '<i class="ti ti-table"></i> Todas las respuestas';
+      } else {
+        contenedorTabla.classList.remove('mostrar-todos');
+        btnVerTodos.innerHTML = '<i class="ti ti-list"></i> Ver todas las respuestas y comentarios';
+        tituloTabla.innerHTML = '<i class="ti ti-table"></i> Últimas respuestas';
+      }
+
+      if (typeof aplicarFiltros === 'function') {
+        aplicarFiltros();
+      }
+    }
+
+    // Acordeón de filtros (solo afecta el estado visual en móvil)
+    document.getElementById('panel-filtros-toggle').addEventListener('click', function () {
+      document.getElementById('panel-filtros').classList.toggle('abierto');
+    });
+
+    // Resalta la pestaña de sección visible al hacer scroll
+    (function () {
+      const tabs = document.querySelectorAll('.tab-seccion');
+      const secciones = Array.from(tabs).map(t => document.querySelector(t.getAttribute('href')));
+
+      function actualizarTabActiva() {
+        let actual = secciones[0];
+        secciones.forEach(sec => {
+          if (sec && sec.getBoundingClientRect().top <= 120) actual = sec;
+        });
+        tabs.forEach((tab, i) => {
+          tab.classList.toggle('activo', secciones[i] === actual);
+        });
+      }
+
+      window.addEventListener('scroll', actualizarTabActiva, { passive: true });
+      actualizarTabActiva();
+    })();
+
+    // Cierra el modal de comentario con la tecla Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') cerrarComentario();
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/repository.js"></script>
+  <script src="js/resultados.js"></script>
+</body>
+</html>

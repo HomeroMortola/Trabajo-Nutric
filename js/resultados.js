@@ -125,10 +125,18 @@ function aplicarFiltros() {
   const promediosPorSeccion = calcularPromediosPorSeccion(datosFiltrados);
   const seccionesConDetalle = calcularDetallePorPregunta(datosFiltrados);
 
+  renderKPIs(datosFiltrados, promediosPorSeccion);
   renderBarras(promediosPorSeccion);
   renderRadar(promediosPorSeccion);
   renderDetalle(seccionesConDetalle);
-  renderTabla(datosFiltrados.slice(0, 20));
+  
+  // Comprobamos la variable global declarada en el HTML
+  if (typeof mostrandoTodos !== 'undefined' && mostrandoTodos) {
+    renderTabla(datosFiltrados); // Muestra absolutamente todas las respuestas
+  } else {
+    renderTabla(datosFiltrados.slice(0, 20)); // Muestra solo las últimas 20
+  }
+  
   renderEdad(datosFiltrados);
   renderGenero(datosFiltrados);
 }
@@ -162,6 +170,46 @@ function calcularDetallePorPregunta(data) {
       return { tipo: 'slider', val: promedio(data.map(e => e[c.col])) }
     })
   }))
+}
+
+function renderKPIs(data, promedios) {
+  const total = data.length;
+
+  const elTotal = document.getElementById('kpi-total');
+  const elTotalSub = document.getElementById('kpi-total-sub');
+  const elPromedio = document.getElementById('kpi-promedio');
+  const elMejor = document.getElementById('kpi-mejor');
+  const elMejorSub = document.getElementById('kpi-mejor-sub');
+  const elPeor = document.getElementById('kpi-peor');
+  const elPeorSub = document.getElementById('kpi-peor-sub');
+
+  elTotal.textContent = total;
+  elTotalSub.textContent = total === 1 ? 'respuesta filtrada' : 'respuestas filtradas';
+
+  if (total === 0) {
+    elPromedio.textContent = '—';
+    elMejor.textContent = '—';
+    elPeor.textContent = '—';
+    elMejorSub.innerHTML = '&nbsp;';
+    elPeorSub.innerHTML = '&nbsp;';
+    return;
+  }
+
+  const promedioGeneral = +(promedios.reduce((a, b) => a + b, 0) / promedios.length).toFixed(1);
+  elPromedio.textContent = promedioGeneral;
+
+  let idxMejor = 0;
+  let idxPeor = 0;
+  promedios.forEach((p, i) => {
+    if (p > promedios[idxMejor]) idxMejor = i;
+    if (p < promedios[idxPeor]) idxPeor = i;
+  });
+
+  elMejor.textContent = SECCIONES[idxMejor].label;
+  elMejorSub.textContent = `promedio ${promedios[idxMejor]}`;
+
+  elPeor.textContent = SECCIONES[idxPeor].label;
+  elPeorSub.textContent = `promedio ${promedios[idxPeor]}`;
 }
 
 function renderBarras(promedios) {
@@ -328,12 +376,45 @@ function renderTabla(data) {
 
     const tdCom = document.createElement('td')
     tdCom.className = 'comentario'
-    tdCom.title = e.comentario || ''
-    tdCom.textContent = e.comentario || '—'
+
+    if (e.comentario) {
+      const wrap = document.createElement('div')
+      wrap.className = 'comentario-contenido'
+
+      const span = document.createElement('span')
+      span.className = 'comentario-texto'
+      span.title = e.comentario
+      span.textContent = e.comentario
+      wrap.appendChild(span)
+
+      const btn = document.createElement('button')
+      btn.className = 'btn-ver-comentario'
+      btn.type = 'button'
+      btn.setAttribute('aria-label', 'Ver comentario completo')
+      btn.textContent = '+'
+      btn.addEventListener('click', () => abrirComentario(e.comentario))
+      wrap.appendChild(btn)
+
+      tdCom.appendChild(wrap)
+    } else {
+      tdCom.textContent = '—'
+    }
+
     tr.appendChild(tdCom)
 
     tbody.appendChild(tr)
   })
+}
+
+function abrirComentario(texto) {
+  const modal = document.getElementById('modal-comentario')
+  const contenido = document.getElementById('modal-comentario-texto')
+  contenido.textContent = texto
+  modal.classList.add('abierto')
+}
+
+function cerrarComentario() {
+  document.getElementById('modal-comentario').classList.remove('abierto')
 }
 
 function renderEdad(data) {
