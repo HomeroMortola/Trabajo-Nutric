@@ -65,7 +65,7 @@ textarea::placeholder{color:#9ca3af;}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  
 :root {
-  --acento: #e85d26;
+  --acento: #3B6D11;
   --acento-suave: #fdf1ec;
   --texto: #1a1a18;
   --texto-suave: #6b6b65;

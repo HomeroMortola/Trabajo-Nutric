@@ -378,11 +378,14 @@ function renderTabla(data) {
     tdCom.className = 'comentario'
 
     if (e.comentario) {
+      const wrap = document.createElement('div')
+      wrap.className = 'comentario-contenido'
+
       const span = document.createElement('span')
       span.className = 'comentario-texto'
       span.title = e.comentario
       span.textContent = e.comentario
-      tdCom.appendChild(span)
+      wrap.appendChild(span)
 
       const btn = document.createElement('button')
       btn.className = 'btn-ver-comentario'
@@ -390,7 +393,9 @@ function renderTabla(data) {
       btn.setAttribute('aria-label', 'Ver comentario completo')
       btn.textContent = '+'
       btn.addEventListener('click', () => abrirComentario(e.comentario))
-      tdCom.appendChild(btn)
+      wrap.appendChild(btn)
+
+      tdCom.appendChild(wrap)
     } else {
       tdCom.textContent = '—'
     }

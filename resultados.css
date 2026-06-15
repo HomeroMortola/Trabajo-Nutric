@@ -295,33 +295,39 @@ table{
   white-space: nowrap;
 }
 
+.comentario-contenido{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  max-width: 180px;
+}
+
 .comentario-texto{
-  display: inline-block;
-  max-width: 160px;
+  flex: 1;
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  vertical-align: middle;
 }
 
 .btn-ver-comentario{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
-  margin-left: 6px;
-  border: 1px solid var(--panel-acento);
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--panel-acento);
   border-radius: 50%;
-  background: var(--panel-acento-suave);
+  background: var(--panel-blanco);
   color: var(--panel-acento);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
   flex-shrink: 0;
-  vertical-align: middle;
-  transition: background 0.15s, transform 0.1s;
+  margin-left: auto;
+  transition: background 0.15s, color 0.15s, transform 0.1s;
 }
 .btn-ver-comentario:hover{
   background: var(--panel-acento);
@@ -330,6 +336,7 @@ table{
 .btn-ver-comentario:active{
   transform: scale(0.92);
 }
+
 
 /* ── Modal de comentario completo ── */
 .modal-overlay{
@@ -418,6 +425,6 @@ table{
     width: 100%;
   }
 
-  .comentario-texto{ max-width: 90px; }
+  .comentario-contenido{ max-width: 100px; }
   .detalle-label{ width: 110px; font-size: 0.72rem; }
 }
