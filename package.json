@@ -4,10 +4,17 @@
     "winget": "^0.0.1"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "devDependencies": {
+    "@playwright/test": "^1.50.1",
     "jest": "^30.4.2",
-    "jest-environment-jsdom": "^30.4.1"
+    "jest-environment-jsdom": "^30.4.1",
+    "serve": "^14.2.4"
   }
 }
