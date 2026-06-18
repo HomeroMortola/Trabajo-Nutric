@@ -94,7 +94,7 @@ const touched = new Set()
 const pillAnswers = new Map()
 
 //Actualización visual del slider
-function updateSlider(el) {
+function updateSlider(el,label) {
   const q = el.dataset.q
   const val = parseInt(el.value, 10)
   const pct = ((val - 1) / 9) * 100
@@ -103,7 +103,7 @@ function updateSlider(el) {
     `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
 
   document.getElementById('vb-' + q).textContent = val
-  document.getElementById('vd-' + q).textContent = LABELS[val]
+  document.getElementById('vd-' + q).textContent = label[val]
   touched.add(String(q))
   updateProgress()
 }
