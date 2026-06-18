@@ -40,6 +40,13 @@ const SECCIONES = [
       { col: 'q9_sabor_general', label: 'Sabor general', tipo: 'slider' },
       { col: 'q10_permanencia_sabor', label: 'Permanencia del sabor', tipo: 'slider' },
     ]
+  },
+  {
+    label: 'General',
+    color: '#6d3bb5',
+    columnas: [
+      { col: 'q11_agrado_general', label: '¿Qué tanto te gusta?', tipo: 'slider' },
+    ]
   }
 ]
 
