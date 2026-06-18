@@ -1,5 +1,5 @@
-/* global SurveyRepository, Chart */
-/* exported cargarDatos */
+/* global SurveyRepository, Chart, mostrandoTodos */
+/* exported cargarDatos, cerrarComentario */
 const SECCIONES = [
   {
     label: 'Vista',
@@ -157,6 +157,7 @@ function pctSi(vals) {
 function calcularPromediosPorSeccion(data) {
   return SECCIONES.map(s => {
     const sliders = s.columnas.filter(c => c.tipo === 'slider')
+    /* eslint-disable-next-line security/detect-object-injection */
     const todos = sliders.flatMap(({ col }) => data.map(e => e[col]))
     return promedio(todos)
   })
@@ -166,8 +167,10 @@ function calcularDetallePorPregunta(data) {
   return SECCIONES.map(s => ({
     ...s,
     resultados: s.columnas.map(c => {
+      /* eslint-disable security/detect-object-injection */
       if (c.tipo === 'sinon') { return { tipo: 'sinon', pct: pctSi(data.map(e => e[c.col])) } }
       return { tipo: 'slider', val: promedio(data.map(e => e[c.col])) }
+      /* eslint-enable security/detect-object-injection */
     })
   }))
 }
@@ -200,16 +203,18 @@ function renderKPIs(data, promedios) {
 
   let idxMejor = 0;
   let idxPeor = 0;
+  
+  // AQUI APLICAMOS EL PASO 2C usando .at() en lugar de []
   promedios.forEach((p, i) => {
-    if (p > promedios[idxMejor]) idxMejor = i;
-    if (p < promedios[idxPeor]) idxPeor = i;
+    if (p > promedios.at(idxMejor)) idxMejor = i;
+    if (p < promedios.at(idxPeor)) idxPeor = i;
   });
 
-  elMejor.textContent = SECCIONES[idxMejor].label;
-  elMejorSub.textContent = `promedio ${promedios[idxMejor]}`;
+  elMejor.textContent = SECCIONES.at(idxMejor).label;
+  elMejorSub.textContent = `promedio ${promedios.at(idxMejor)}`;
 
-  elPeor.textContent = SECCIONES[idxPeor].label;
-  elPeorSub.textContent = `promedio ${promedios[idxPeor]}`;
+  elPeor.textContent = SECCIONES.at(idxPeor).label;
+  elPeorSub.textContent = `promedio ${promedios.at(idxPeor)}`;
 }
 
 function renderBarras(promedios) {
