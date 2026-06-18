@@ -108,62 +108,6 @@ function updateSlider(el,label) {
   updateProgress()
 }
 
-function updateSlider_2(el) {
-  const q = el.dataset.q
-  const val = parseInt(el.value, 10)
-  const pct = ((val - 1) / 9) * 100
-
-  el.style.background =
-    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
-
-  document.getElementById('vb-' + q).textContent = val
-  document.getElementById('vd-' + q).textContent = LABELS_2[val]
-  touched.add(String(q))
-  updateProgress()
-}
-
-function updateSlider_3(el) {
-  const q = el.dataset.q
-  const val = parseInt(el.value, 10)
-  const pct = ((val - 1) / 9) * 100
-
-  el.style.background =
-    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
-
-  document.getElementById('vb-' + q).textContent = val
-  document.getElementById('vd-' + q).textContent = LABELS_3[val]
-  touched.add(String(q))
-  updateProgress()
-}
-
-function updateSlider_4(el) {
-  const q = el.dataset.q
-  const val = parseInt(el.value, 10)
-  const pct = ((val - 1) / 9) * 100
-
-  el.style.background =
-    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
-
-  document.getElementById('vb-' + q).textContent = val
-  document.getElementById('vd-' + q).textContent = LABELS_4[val]
-  touched.add(String(q))
-  updateProgress()
-}
-
-
-function updateSlider_5(el) {
-  const q = el.dataset.q
-  const val = parseInt(el.value, 10)
-  const pct = ((val - 1) / 9) * 100
-
-  el.style.background =
-    `linear-gradient(to right,#3B6D11 ${pct}%,#EAF3DE ${pct}%)`
-
-  document.getElementById('vb-' + q).textContent = val
-  document.getElementById('vd-' + q).textContent = LABELS_5[val]
-  touched.add(String(q))
-  updateProgress()
-}
 
 
 //Selección de pill (Sí/No)
