@@ -32,7 +32,7 @@
 <div class="content">
 
   <!-- Progreso -->
-  <div class="progress-label" id="progress-label" style="margin-top:1.5rem;">0 de 12 respondidas</div>
+  <div class="progress-label" id="progress-label" style="margin-top:1.5rem;">0 de 13 respondidas</div>
   <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
 
   <div class="section-header">
@@ -67,7 +67,6 @@
       </div>
     </div>
   </div>
-
   <!-- SECCIÓN 1: VISTA -->
   <div class="section-header">
     <div class="section-icon"><i class="ti ti-eye"></i></div>
@@ -169,6 +168,18 @@
     </div>
   </div>
 
+  <div class="section-header">
+    <div class="section-icon"><i class="ti ti-eye"></i></div>
+    <div class="section-title-text">General <span style="font-weight:400;color:#6b7280;font-size:13px;">— opinion final</span></div>
+  </div>
+  <div class="card">
+    <div class="q-block">
+      <div class="q-text"><span class="q-num">11</span><span>¿Qué tanto te gusta la tartaleta?</span></div>
+      <div class="slider-row"><div class="slider-wrap"><input type="range" min="1" max="10" value="1" step="1" data-q="11" oninput="updateSlider(this)"><div class="tick-row"><span class="tick">1</span><span class="tick">2</span><span class="tick">3</span><span class="tick">4</span><span class="tick">5</span><span class="tick">6</span><span class="tick">7</span><span class="tick">8</span><span class="tick">9</span><span class="tick">10</span></div></div><div class="val-badge" id="vb-11">1</div></div>
+      <div class="val-desc" id="vd-11">me disgusta muchísimo</div>
+    </div>
+  </div>
+
   <!-- Comentario y envío -->
   <div class="card">
     <div style="font-size:14px;font-weight:500;color:#1a1a1a;display:flex;align-items:center;gap:8px;">
@@ -231,8 +242,8 @@ function validarFechaNac() {
   updateProgress();
 }
 function updateProgress() {
-  const TOTAL = 12;
-  const sliderQs = [1,2,4,6,7,8,9,10];
+  const TOTAL = 13;
+  const sliderQs = [1,2,4,6,7,8,9,10,11];
   const pillQs = [3,5, 'genero'];
   let answered = 0;
   sliderQs.forEach(q => {

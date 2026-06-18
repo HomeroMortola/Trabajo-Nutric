@@ -13,7 +13,8 @@ const COLUMNAS = {
   7: 'q7_crocancia',
   8: 'q8_integracion_sabores',
   9: 'q9_sabor_general',
-  10: 'q10_permanencia_sabor'
+  10: 'q10_permanencia_sabor',
+  11: 'q11_agrado_general'
 }
 const COLUMNAS_VALIDAS = new Set(Object.values(COLUMNAS))
 
@@ -87,7 +88,7 @@ const LABELS_5 = {
 
 
 
-const TOTAL = 12
+const TOTAL = 13
 const touched = new Set()
 
 //Respuestas de pills (Sí/No)
